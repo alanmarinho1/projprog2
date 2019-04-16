@@ -26,12 +26,13 @@ public class Financeiro {
 		this.registro = registro;
 	}
 
-	public void creditar() {
-		
+	public void creditar(double valor) {
+		setSaldo(getSaldo() + valor);
 	}
 	
-	public void debitar() {
+	public void debitar(double valor) {
 		
+		setSaldo(getSaldo() - valor);
 	}
 	
 }
