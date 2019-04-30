@@ -2,12 +2,10 @@
 public class Financeiro {
 	
 	private static double saldo = 1200;
-	private String registro;
+		
 	
-	
-	public Financeiro(String registro) {
-		super();
-		this.registro = registro;
+	public Financeiro() {
+		
 	}
 
 	public static double getSaldo() {
@@ -16,14 +14,6 @@ public class Financeiro {
 
 	public static void setSaldo(double saldo) {
 		Financeiro.saldo = saldo;
-	}
-
-	public String getRegistro() {
-		return registro;
-	}
-
-	public void setRegistro(String relatorio) {
-		this.registro = registro;
 	}
 
 	public void creditar(double valor) {

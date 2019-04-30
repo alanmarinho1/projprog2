@@ -5,14 +5,17 @@ public class Pedido {
 	private Cliente cliente;
 	private Produtos produto;
 	private Promocoes promocao;
+	private Financeiro caixa;
 	private double total;
 	
-	public Pedido(Funcionario funcionario, Cliente cliente, Produtos produto, Promocoes promocao, double total) {
+	public Pedido(Funcionario funcionario, Cliente cliente, Produtos produto, Promocoes promocao, Financeiro caixa,
+			double total) {
 		super();
 		this.funcionario = funcionario;
 		this.cliente = cliente;
 		this.produto = produto;
 		this.promocao = promocao;
+		this.caixa = caixa;
 		this.total = total;
 	}
 	public Funcionario getFuncionario() {
@@ -39,6 +42,12 @@ public class Pedido {
 	public void setPromocao(Promocoes promocao) {
 		this.promocao = promocao;
 	}
+	public Financeiro getCaixa() {
+		return caixa;
+	}
+	public void setCaixa(Financeiro caixa) {
+		this.caixa = caixa;
+	}
 	public double getTotal() {
 		return total;
 	}
@@ -46,6 +55,9 @@ public class Pedido {
 		this.total = total;
 	}
 	
-	
+	public void realizarPedido() {
+		funcionario.setComissao(getTotal() * 0.2);
+		caixa.creditar(getTotal());
+	}
 	
 }

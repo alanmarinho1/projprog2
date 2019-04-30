@@ -1,16 +1,20 @@
 
 public class Produtos {
 	
+	private int codigo;
 	private String descricao;
 	private int quantidade;
 	private double valor;
 	
-	public Produtos(String descricao, int quantidade, double valor) {
+	
+	public Produtos(int codigo, String descricao, int quantidade, double valor) {
 		super();
+		this.codigo = codigo;
 		this.descricao = descricao;
 		this.quantidade = quantidade;
 		this.valor = valor;
 	}
+	
 	public String getDescricao() {
 		return descricao;
 	}
@@ -30,8 +34,22 @@ public class Produtos {
 		this.valor = valor;
 	}
 	
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
 	public void estoque() {
-		//aqui trará relatorio de quantidade de produtos e o quanto tem de valor desse total
+		
+	//aqui trará relatorio de quantidade de produtos e o quanto tem de valor desse total
+	double total = getValor() * getQuantidade();
+	System.out.println("--------");
+	System.out.println("Quantidade em estoque: " + getQuantidade() + "\n");
+	System.out.println("Valor total do produto em estoque: " + total);
+	System.out.println("--------");
 	}
 	
 }

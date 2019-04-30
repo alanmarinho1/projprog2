@@ -42,8 +42,9 @@ public class Compra {
 
 
 
-	public void realizarCompra(Produtos produto, Financeiro caixa) {
+	public void realizarCompra() {
 		
 		//aqui posso realizar compras de um ou mais produtos debitando do saldo total do meu caixa
+		caixa.debitar(getTotal());
 	}
 }
