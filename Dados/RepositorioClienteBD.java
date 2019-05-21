@@ -1,8 +1,11 @@
 package Dados;
 
 import java.sql.ResultSet;
+import java.util.Calendar;
+
+import Negocios.Cliente;
 import Negocios.Pessoa;
-import Negocios.PessoaFisica;
+
 
 public class RepositorioClienteBD implements RepositorioPessoa {
 	
@@ -10,7 +13,7 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 		BD.getInstance().conectar();
 		try {
 			String query = "INSERT INTO cliente (nome, email, tipo, endereco, cadastro_fisica_juridica, rg, nascimento) "
-					+ "VALUES ('" + pessoa.getNome() + "', '" + pessoa.getEmail() + "', 'PF' , '" + pessoa.getEndereco() + "', '" + ((PessoaFisica)pessoa).getCpf() + "', '" + ((PessoaFisica)pessoa).getRg() + "', '" + ((PessoaFisica)pessoa).getDataNascimento()+ "');"; 
+					+ "VALUES ('" + pessoa.getNome() + "', '" + ((Cliente)pessoa).getEmail() + "', 'PF' , '" + pessoa.getEndereco() + "', '" + ((Cliente)pessoa).getCpf() + "', '" + ((Cliente)pessoa).getRg() + "', '" + ((Cliente)pessoa).getNascimento().getTime()+ "');"; 
 			
 			BD.getInstance().getStatement().executeUpdate(query);	
 		} catch(Exception e) {
@@ -22,7 +25,7 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 	
 	public Pessoa procurar(String cpf) {
 		BD.getInstance().conectar();
-		Pessoa resultado = new PessoaFisica();
+		Pessoa resultado = new Cliente();
 		ResultSet resultset;
 		try {
 			String query = "SELECT * FROM cliente WHERE cadastro_fisica_juridica = '" + cpf + "';";
@@ -31,11 +34,11 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 			if(resultset != null && resultset.next()){
     			resultado.setCodigo(resultset.getString("id_cliente"));
     			resultado.setNome(resultset.getString("nome"));
-    			resultado.setEmail(resultset.getString("email"));
+    			((Cliente)resultado).setEmail(resultset.getString("email"));
     			resultado.setEndereco(resultset.getString("endereco"));
-    			((PessoaFisica)resultado).setCpf(resultset.getString("cadastro_fisica_juridica"));
-    			((PessoaFisica)resultado).setRg(Integer.parseInt(resultset.getString("rg")));
-    			((PessoaFisica)resultado).setDataNascimento(resultset.getString("nascimento"));
+    			((Cliente)resultado).setCpf(resultset.getString("cadastro_fisica_juridica"));
+    			((Cliente)resultado).setRg(Integer.parseInt(resultset.getString("rg")));
+    			((Cliente)resultado).setDataNascimento(resultset.getString("nascimento"));
             }
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -47,8 +50,8 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 	public void alterar(Pessoa pessoa) {
 		BD.getInstance().conectar();
 		try {
-			String query = "UPDATE cliente SET nome = '" + pessoa.getNome() + "', email = '" + pessoa.getEmail() + "', endereco = '" + pessoa.getEndereco() + "'"
-					+ ", cadastro_fisica_juridica = '" + ((PessoaFisica)pessoa).getCpf() + "', rg = '" + ((PessoaFisica)pessoa).getRg() + "', nascimento = '" + ((PessoaFisica)pessoa).getDataNascimento() + "' WHERE cadastro_fisica_juridica = '" + ((PessoaFisica) pessoa).getCpf() + "';"; 
+			String query = "UPDATE cliente SET nome = '" + pessoa.getNome() + "', email = '" + ((Cliente)pessoa).getEmail() + "', endereco = '" + pessoa.getEndereco() + "'"
+					+ ", cadastro_fisica_juridica = '" + ((Cliente)pessoa).getCpf() + "', rg = '" + ((Cliente)pessoa).getRg() + "', nascimento = '" + ((Cliente)pessoa).getNascimento().getTime() + "' WHERE cadastro_fisica_juridica = '" + ((Cliente) pessoa).getCpf() + "';"; 
 			BD.getInstance().getStatement().executeUpdate(query);
 		} catch(Exception e) {
 			System.out.println("Erro: " + e.getMessage());

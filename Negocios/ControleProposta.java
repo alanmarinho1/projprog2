@@ -1,67 +1,67 @@
 package Negocios;
 
 
-import Dados.RepositorioProposta;
-import Dados.RepositorioPropostaBD;
+import Dados.RepositorioPedido;
+import Dados.RepositorioPedidoBD;
 
-public class ControleProposta {
+public class ControlePedido {
 	
-	RepositorioProposta propostas = new RepositorioPropostaBD();
+	RepositorioPedido pedidos = new RepositorioPedidoBD();
     
-	public void cadastrar(Proposta proposta) throws PropostaException {
+	public void cadastrar(Pedido pedido) throws PedidoException {
 		
-		if(proposta.getFuncionario() == null) {
-			PropostaException e1;
-			e1 = new PropostaException(proposta.getFuncionario());
+		if(pedido.getFuncionario() == null) {
+			PedidoException e1;
+			e1 = new PedidoException(pedido.getFuncionario());
 			throw e1;
 		}
 		
-        if (proposta.getCliente() == null){
-        	PropostaException e2;
-        	e2 = new PropostaException(proposta.getCliente());
+        if (pedido.getCliente() == null){
+        	PedidoException e2;
+        	e2 = new PedidoException(pedido.getCliente());
 			throw e2;
         }
-        if (proposta.getVeiculo() == null){
-        	PropostaException e3;
-        	e3 = new PropostaException(proposta.getVeiculo());
+        if (pedido.getProduto() == null){
+        	PedidoException e3;
+        	e3 = new PedidoException(pedido.getProduto());
 			throw e3;
         }
-		propostas.inserir(proposta);
+		pedidos.inserir(pedido);
 	}
      
-	public void alterar(Proposta proposta) throws PropostaException {
-		if(proposta.getFuncionario() == null) {
-			PropostaException e1;
-			e1 = new PropostaException(proposta.getFuncionario());
+	public void alterar(Pedido pedido) throws PedidoException {
+		if(pedido.getFuncionario() == null) {
+			PedidoException e1;
+			e1 = new PedidoException(pedido.getFuncionario());
 			throw e1;
 		}
 		
-        if (proposta.getCliente() == null){
-        	PropostaException e2;
-        	e2 = new PropostaException(proposta.getCliente());
+        if (pedido.getCliente() == null){
+        	PedidoException e2;
+        	e2 = new PedidoException(pedido.getCliente());
 			throw e2;
         }
-        if (proposta.getVeiculo() == null){
-        	PropostaException e3;
-        	e3 = new PropostaException(proposta.getVeiculo());
+        if (pedido.getProduto() == null){
+        	PedidoException e3;
+        	e3 = new PedidoException(pedido.getProduto());
 			throw e3;
         }
-		propostas.alterar(proposta);
+		pedidos.alterar(pedido);
     }
      
-	public Proposta procurar(String codProposta) throws NaoLocalizadoPropostaException{
-		if (propostas.procurar(codProposta).getCodProposta() == null) {
-			throw new NaoLocalizadoPropostaException(codProposta);
+	public Pedido procurar(String codPedido) throws NaoLocalizadoPedidoException{
+		if (pedidos.procurar(codPedido).getCodPedido() == null) {
+			throw new NaoLocalizadoPedidoException(codPedido);
 		}else {
 			
-		return propostas.procurar(codProposta);
+		return pedidos.procurar(codPedido);
 		}
 	}
 	
-	public void remover(String codProposta) {
-		propostas.remover(codProposta);
+	public void remover(String codPedido) {
+		pedidos.remover(codPedido);
 	}
 	public void listar() {
-		propostas.listar();
+		pedidos.listar();
 	}
 }

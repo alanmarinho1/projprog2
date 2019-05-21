@@ -10,10 +10,10 @@ public class RepositorioFuncionarioBD implements RepositorioPessoa{
 	public void inserir(Pessoa pessoa) {
 		BD.getInstance().conectar();
 		try {
-			String query = "INSERT INTO funcionario (nome, email, cpf, profissao, salario) "
-					+ "VALUES ('" + pessoa.getNome() + "', '" + pessoa.getEmail() + "','" + ((Funcionario) pessoa).getCpf()
+			String query = "INSERT INTO funcionario (nome, endereco, cpf, profissao, salario, comissao) "
+					+ "VALUES ('" + pessoa.getNome() + "', '" + pessoa.getEndereco() + "','" + ((Funcionario) pessoa).getCpf()
 					+ "','" + ((Funcionario) pessoa).getProfissao()
-					+ "', '" + ((Funcionario)pessoa).getSalario() +"');"; 
+					+ "', '" + ((Funcionario)pessoa).getSalario() +"' '"+((Funcionario)pessoa).getComissao()+"');"; 
 
 			BD.getInstance().getStatement().executeUpdate(query);
 			
@@ -35,10 +35,11 @@ public class RepositorioFuncionarioBD implements RepositorioPessoa{
 			if(resultset != null && resultset.next()){
     			resultado.setCodigo(resultset.getString("id_funcionario"));
     			resultado.setNome(resultset.getString("nome"));
-    			resultado.setEmail(resultset.getString("email"));
+    			resultado.setEndereco(resultset.getString("endereco"));
     			((Funcionario)resultado).setCpf(resultset.getString("cpf"));
     			((Funcionario)resultado).setProfissao(resultset.getString("profissao"));
     			((Funcionario)resultado).setSalario(Double.valueOf(resultset.getString("salario")));
+    			((Funcionario)resultado).setComissao(Double.valueOf(resultset.getString("comissao")));
             }
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -50,10 +51,11 @@ public class RepositorioFuncionarioBD implements RepositorioPessoa{
 	public void alterar(Pessoa pessoa) {
 		BD.getInstance().conectar();
 		try {
-			String query = "UPDATE funcionario SET nome = '" + pessoa.getNome() + "', email = '" + pessoa.getEmail()
+			String query = "UPDATE funcionario SET nome = '" + pessoa.getNome() + "', email = '" + pessoa.getEndereco()
 			+ "', cpf = '" + ((Funcionario)pessoa).getCpf()
 			+ "', profissao = '" + ((Funcionario)pessoa).getProfissao()
 			+ "', salario = '" + ((Funcionario)pessoa).getSalario()
+			+ "', comissao = '" + ((Funcionario)pessoa).getComissao()
 			+ "' WHERE cpf = '" + ((Funcionario) pessoa).getCpf() + "';"; 
 			BD.getInstance().getStatement().executeUpdate(query);
 		} catch(Exception e) {
@@ -81,10 +83,11 @@ public class RepositorioFuncionarioBD implements RepositorioPessoa{
 		while(BD.getInstance().getResultset().next()) {
 			System.out.println("ID: " + BD.getInstance().getResultset().getString("id_funcionario") + 
 					"\nNome: " + BD.getInstance().getResultset().getString("nome") + 
-					"\nEmail: " + BD.getInstance().getResultset().getString("email") +
+					"\nEmail: " + BD.getInstance().getResultset().getString("Endereco") +
 					"\nCPF: " + BD.getInstance().getResultset().getString("cpf") + 
 					"\nProfissao: " + BD.getInstance().getResultset().getString("profissao") + 
-					"\nSalario: " + BD.getInstance().getResultset().getString("salario") + "\n");
+					"\nSalario: " + BD.getInstance().getResultset().getString("salario") + 
+					"\nComissao: " + BD.getInstance().getResultset().getString("comissao") + "\n");
 		}
 	} catch(Exception e) {
 		System.out.println("Erro: Não foi possivel listar " + e.getMessage());
