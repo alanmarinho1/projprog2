@@ -10,8 +10,8 @@ public class RepositorioFuncionarioBD implements RepositorioPessoa{
 	public void inserir(Pessoa pessoa) {
 		BD.getInstance().conectar();
 		try {
-			String query = "INSERT INTO funcionario (nome, endereco, cpf, profissao, salario, comissao) "
-					+ "VALUES ('" + pessoa.getNome() + "', '" + pessoa.getEndereco() + "','" + ((Funcionario) pessoa).getCpf()
+			String query = "INSERT INTO funcionario (codigo, nome, endereco, cpf, profissao, salario, comissao) "
+					+ "VALUES ('" + pessoa.getCodigo() + "','" + pessoa.getNome() + "', '" + pessoa.getEndereco() + "','" + pessoa.getCpf()
 					+ "','" + ((Funcionario) pessoa).getProfissao()
 					+ "', '" + ((Funcionario)pessoa).getSalario() +"' '"+((Funcionario)pessoa).getComissao()+"');"; 
 
@@ -33,7 +33,7 @@ public class RepositorioFuncionarioBD implements RepositorioPessoa{
 			resultset = BD.getInstance().getStatement().executeQuery(query);
 		
 			if(resultset != null && resultset.next()){
-    			resultado.setCodigo(resultset.getString("id_funcionario"));
+    			resultado.setCodigo(resultset.getString("codigo"));
     			resultado.setNome(resultset.getString("nome"));
     			resultado.setEndereco(resultset.getString("endereco"));
     			((Funcionario)resultado).setCpf(resultset.getString("cpf"));
@@ -81,7 +81,7 @@ public class RepositorioFuncionarioBD implements RepositorioPessoa{
 		String query = "SELECT * FROM funcionario ORDER BY id_funcionario";
 		BD.getInstance().setResultset(BD.getInstance().getStatement().executeQuery(query));
 		while(BD.getInstance().getResultset().next()) {
-			System.out.println("ID: " + BD.getInstance().getResultset().getString("id_funcionario") + 
+			System.out.println("ID: " + BD.getInstance().getResultset().getString("codigo") + 
 					"\nNome: " + BD.getInstance().getResultset().getString("nome") + 
 					"\nEmail: " + BD.getInstance().getResultset().getString("Endereco") +
 					"\nCPF: " + BD.getInstance().getResultset().getString("cpf") + 

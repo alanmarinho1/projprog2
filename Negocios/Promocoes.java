@@ -5,17 +5,45 @@ import java.util.Calendar;
 public class Promocoes {
 
 	private double desconto;
+	private String descricao;
 	private Cliente cliente;
 	private Produtos produto;
 	
-	public Promocoes(double desconto, Cliente cliente) {
-		super();
-		this.desconto = desconto;
+	public Promocoes() {}
+	
+	
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+
+
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
-	public Promocoes() {}
-	
+
+
+	public Produtos getProduto() {
+		return produto;
+	}
+
+
+
+	public void setProduto(Produtos produto) {
+		this.produto = produto;
+	}
+
+
+
 	public double getDesconto() {
 		return desconto;
 	}

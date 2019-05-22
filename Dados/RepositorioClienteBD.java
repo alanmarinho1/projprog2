@@ -12,8 +12,8 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 	public void inserir(Pessoa pessoa) {
 		BD.getInstance().conectar();
 		try {
-			String query = "INSERT INTO cliente (nome, email, tipo, endereco, cadastro_fisica_juridica, rg, nascimento) "
-					+ "VALUES ('" + pessoa.getNome() + "', '" + ((Cliente)pessoa).getEmail() + "', 'PF' , '" + pessoa.getEndereco() + "', '" + ((Cliente)pessoa).getCpf() + "', '" + ((Cliente)pessoa).getRg() + "', '" + ((Cliente)pessoa).getNascimento().getTime()+ "');"; 
+			String query = "INSERT INTO cliente (codigo, nome, email, endereco, cpf, rg, nascimento) "
+					+ "VALUES ( '" + pessoa.getCodigo() + "', '" + pessoa.getNome() + "', '" + ((Cliente)pessoa).getEmail() + "', '" + pessoa.getEndereco() + "', '" + pessoa.getCpf() + "', '" + ((Cliente)pessoa).getRg() + "', '" + ((Cliente)pessoa).getNascimento().getTime()+ "');"; 
 			
 			BD.getInstance().getStatement().executeUpdate(query);	
 		} catch(Exception e) {
@@ -28,17 +28,17 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 		Pessoa resultado = new Cliente();
 		ResultSet resultset;
 		try {
-			String query = "SELECT * FROM cliente WHERE cadastro_fisica_juridica = '" + cpf + "';";
+			String query = "SELECT * FROM cliente WHERE cpf = '" + cpf + "';";
 			resultset = BD.getInstance().getStatement().executeQuery(query);
 		
 			if(resultset != null && resultset.next()){
-    			resultado.setCodigo(resultset.getString("id_cliente"));
+    			resultado.setCodigo(resultset.getString("codigo"));
     			resultado.setNome(resultset.getString("nome"));
     			((Cliente)resultado).setEmail(resultset.getString("email"));
     			resultado.setEndereco(resultset.getString("endereco"));
-    			((Cliente)resultado).setCpf(resultset.getString("cadastro_fisica_juridica"));
+    			resultado.setCpf(resultset.getString("cadastro_fisica_juridica"));
     			((Cliente)resultado).setRg(Integer.parseInt(resultset.getString("rg")));
-    			((Cliente)resultado).setDataNascimento(resultset.getString("nascimento"));
+    			((Cliente)resultado).setNascimento((Calendar)resultset.getObject("nascimento"));
             }
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -51,7 +51,7 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 		BD.getInstance().conectar();
 		try {
 			String query = "UPDATE cliente SET nome = '" + pessoa.getNome() + "', email = '" + ((Cliente)pessoa).getEmail() + "', endereco = '" + pessoa.getEndereco() + "'"
-					+ ", cadastro_fisica_juridica = '" + ((Cliente)pessoa).getCpf() + "', rg = '" + ((Cliente)pessoa).getRg() + "', nascimento = '" + ((Cliente)pessoa).getNascimento().getTime() + "' WHERE cadastro_fisica_juridica = '" + ((Cliente) pessoa).getCpf() + "';"; 
+					+ ", cpf = '" + pessoa.getCpf() + "', rg = '" + ((Cliente)pessoa).getRg() + "', nascimento = '" + ((Cliente)pessoa).getNascimento().getTime() + "' WHERE cpf = '" + pessoa.getCpf() + "';"; 
 			BD.getInstance().getStatement().executeUpdate(query);
 		} catch(Exception e) {
 			System.out.println("Erro: " + e.getMessage());
@@ -74,12 +74,12 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 	public void listar() {
 		BD.getInstance().conectar();
 		try {
-		String query = "SELECT * FROM cliente WHERE tipo LIKE 'PF' ORDER BY id_cliente";
+		String query = "SELECT * FROM cliente WHERE tipo ORDER BY id_cliente";
 		BD.getInstance().setResultset(BD.getInstance().getStatement().executeQuery(query));
 		while(BD.getInstance().getResultset().next()) {
-			System.out.println("ID: " + BD.getInstance().getResultset().getString("id_cliente") + "\nNome: " + BD.getInstance().getResultset().getString("nome") + 
+			System.out.println("ID: " + BD.getInstance().getResultset().getString("codigo") + "\nNome: " + BD.getInstance().getResultset().getString("nome") + 
 					"\nEmail: " + BD.getInstance().getResultset().getString("email") + "\nEndereço: " + BD.getInstance().getResultset().getString("endereco") +
-					"\nCPF: " + BD.getInstance().getResultset().getString("cadastro_fisica_juridica") + "\nRG: " + BD.getInstance().getResultset().getString("rg") +
+					"\nCPF: " + BD.getInstance().getResultset().getString("cpf") + "\nRG: " + BD.getInstance().getResultset().getString("rg") +
 					"\nData de Nascimento: " + BD.getInstance().getResultset().getString("nascimento") + "\n");
 		}
 	} catch(Exception e) {
