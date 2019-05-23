@@ -9,13 +9,19 @@ public class ControleCliente {
 	
 	RepositorioPessoa Cliente = new RepositorioClienteBD();
     
-	public void cadastrar(Pessoa pessoa) throws InserirException {
+	public void cadastrar(Pessoa pessoa) throws InserirException, PessoaJaExisteException {
 		
-		if (((Cliente)pessoa).getCpf().length() != 11 || ((Cliente)pessoa).getCpf().equals("")) {
-			InserirException e;
-			e = new InserirException(((Cliente)pessoa).getCpf());
-			throw e;		
+		if (pessoa.getCpf().length() != 11 || pessoa.getCpf().equals("")) {
+			InserirException e1;
+			e1 = new InserirException(pessoa.getCpf());
+			throw e1;		
 			
+		}
+		
+		if (Cliente.procurar(pessoa.getCpf()).getCodigo() == pessoa.getCpf()) {
+			PessoaJaExisteException e2;
+			e2 = new PessoaJaExisteException(pessoa.getCpf());
+			throw e2;
 		}
 
 			Cliente.inserir(pessoa);
@@ -23,12 +29,18 @@ public class ControleCliente {
 	
 
      
-	public void alterar(Pessoa pessoa) throws InserirException {
+	public void alterar(Pessoa pessoa) throws InserirException, PessoaJaExisteException {
 		if (((Cliente)pessoa).getCpf().length() != 11 || ((Cliente)pessoa).getCpf().equals("")) {
-			InserirException e;
-			e = new InserirException(((Cliente)pessoa).getCpf());
-			throw e;
+			InserirException e1;
+			e1 = new InserirException(((Cliente)pessoa).getCpf());
+			throw e1;
         }
+		
+		if (Cliente.procurar(pessoa.getCpf()).getCodigo() == pessoa.getCpf()) {
+			PessoaJaExisteException e2;
+			e2 = new PessoaJaExisteException(pessoa.getCpf());
+			throw e2;
+		}
 		
 		 		Cliente.alterar(pessoa);
         }

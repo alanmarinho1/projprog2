@@ -2,25 +2,22 @@ package Negocios;
 
 
 import Negocios.Pessoa;
-import Negocios.Proposta;
-import Negocios.Veiculo;
+import Negocios.Pedido;
 
 public class Fachada {
 	
 	private ControleFuncionarios funcionarios;
-	private ControlePessoaFisica pessoafisica;
-	private ControlePessoaJuridica pessoajuridica;
-	private ControleProposta propostas;
-	private ControleVeiculo veiculos;
+	private ControleCliente cliente;
+	private ControlePedido pedido;
+	private ControleProduto produtos;
 	private static Fachada instance;
 	
 	public Fachada() {
 	
 	funcionarios = new ControleFuncionarios();
-	pessoafisica = new ControlePessoaFisica();
-	pessoajuridica = new ControlePessoaJuridica();
-	propostas = new ControleProposta();
-	veiculos = new ControleVeiculo();
+	cliente = new ControleCliente();
+	pedido = new ControlePedido();
+	produtos = new ControleProduto();
 	
 	}
 	
@@ -47,52 +44,36 @@ public class Fachada {
 	}
 	
 	
-	public void cadastrarPessoaFisica(Pessoa pessoa) throws InserirException{
-		pessoafisica.cadastrar((PessoaFisica) pessoa);
+	public void cadastrarCliente(Pessoa pessoa) throws InserirException, PessoaJaExisteException{
+		cliente.cadastrar(pessoa);
 	}
 	
-	public void alterarPessoaFisica(Pessoa pessoa) throws InserirException{
-		pessoafisica.alterar((PessoaFisica) pessoa);
+	public void alterarCliente(Pessoa pessoa) throws InserirException, PessoaJaExisteException{
+		cliente.alterar(pessoa);
     }
 	
-	public Pessoa procurarPessoaFisica(String cpf) throws NaoLocalizadaPessoaException{
-		 return pessoafisica.procurar(cpf);
+	public Pessoa procurarCliente(String cpf) throws NaoLocalizadaPessoaException{
+		 return cliente.procurar(cpf);
 	}
 	
-	public void removerPessoaFisica(String id) {
-		pessoafisica.remover(id);
+	public void removerCliente(String id) {
+		cliente.remover(id);
 	}
 	
-	public void cadastrarPessoaJuridica(Pessoa pessoa) throws InserirException {
-		pessoajuridica.cadastrar(pessoa);
+	public void cadastrarPedido(Pedido pedido) throws PedidoException{
+		pedido.cadastrar(pedido);
 	}
 	
-	public void alterarPessoaJuridica(Pessoa pessoa) throws InserirException{
-		pessoajuridica.alterar(pessoa);
+	public void alterarPedido(Pedido pedido) throws PedidoException {
+		pedido.alterar(pedido);
     }
 	
-	public Pessoa procurarPessoaJuridica(String cnpj) throws NaoLocalizadaPessoaException{
-		return pessoajuridica.procurar(cnpj);
+	public Pedido procurarPedido(String codPedido) throws NaoLocalizadoPedidoException{
+		return pedido.procurar(codPedido);
 	}
 	
-	public void removerPessoaJuridica(String cnpj) {
-		pessoajuridica.remover(cnpj);
-	}
-	
-	public void cadastrarProposta(Proposta proposta) throws PropostaException{
-		propostas.cadastrar(proposta);
-	}
-	
-	public void alterarProposta(Proposta proposta) throws PropostaException {
-		propostas.alterar(proposta);
-    }
-	
-	public Proposta procurarProposta(String codProposta) throws NaoLocalizadoPropostaException{
-		return propostas.procurar(codProposta);
-	}
-	
-	public void removerProposta(String codProposta) {
-		propostas.remover(codProposta);
+	public void removerPedido(String codPedido) {
+		pedido.remover(codPedido);
 	}
 	
 	

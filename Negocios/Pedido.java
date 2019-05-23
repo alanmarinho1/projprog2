@@ -59,7 +59,7 @@ public class Pedido {
 		this.total = total;
 	}
 	
-	public void realizarPedido() {
+	public void PedidoRealizado() {
 		funcionario.setComissao(getTotal() * 0.2);
 		caixa.creditar(getTotal());
 	}

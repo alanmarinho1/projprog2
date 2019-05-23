@@ -1,13 +1,12 @@
 package Negocios;
 
-import Dados.RepositorioVeiculo;
-import Dados.RepositorioVeiculoBD;
-
+import Dados.RepositorioProdutos;
+import Dados.RepositorioProdutosBD;
 
 
 public class ControleProduto {
 
-	RepositorioProduto produtos = new RepositorioProdutoBD();
+	RepositorioProdutos produtos = new RepositorioProdutosBD();
 	
 	//fazer a regra de negocio pra produtos depois
 	
