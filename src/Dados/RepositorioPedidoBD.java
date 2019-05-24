@@ -4,9 +4,20 @@ import Negocios.Pedido;
 
 public class RepositorioPedidoBD implements RepositorioPedido {
 
-	@Override
+	
 	public void inserir(Pedido pedido) {
-		// TODO Auto-generated method stub
+		BD.getInstance().conectar();
+		try {
+			String query = "INSERT INTO pedido (id_funcionario, id_cliente, id_produto, data_pedido, status_pedido, valor, adicional) "
+					+ "VALUES ('" + pedido.getFuncionario().getCodigo() + "', '" + pedido.getCliente().getCodigo() + "', '" + pedido.getVeiculo().getCodVeiculo() +"', "
+							+ "'" + pedido.getData().getTime() + "', '" + pedido.getStatus() + "', '" + pedido.getValor() + "', '" + pedido.getAdicional()+ "');"; 
+			
+			BD.getInstance().getStatement().executeUpdate(query);	
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Erro: Não foi possivel inserir" + e.getMessage());
+		}
+		BD.getInstance().desconectar();
 		
 	}
 

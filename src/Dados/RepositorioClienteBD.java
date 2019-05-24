@@ -12,7 +12,7 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 	public void inserir(Pessoa pessoa) {
 		BD.getInstance().conectar();
 		try {
-			String query = "INSERT INTO cliente (codigo, nome, email, endereco, cpf, rg, nascimento) "
+			String query = "INSERT INTO cliente (id_cliente, nome, email, endereco, cpf, rg, nascimento) "
 					+ "VALUES ( '" + pessoa.getCodigo() + "', '" + pessoa.getNome() + "', '" + ((Cliente)pessoa).getEmail() + "', '" + pessoa.getEndereco() + "', '" + pessoa.getCpf() + "', '" + ((Cliente)pessoa).getRg() + "', '" + ((Cliente)pessoa).getNascimento().getTime()+ "');"; 
 			
 			BD.getInstance().getStatement().executeUpdate(query);	

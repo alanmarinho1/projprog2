@@ -10,7 +10,7 @@ public class RepositorioFuncionarioBD implements RepositorioPessoa{
 	public void inserir(Pessoa pessoa) {
 		BD.getInstance().conectar();
 		try {
-			String query = "INSERT INTO funcionario (codigo, nome, endereco, cpf, profissao, salario, comissao) "
+			String query = "INSERT INTO funcionario (id_funcionario, nome, endereco, cpf, profissao, salario, comissao) "
 					+ "VALUES ('" + pessoa.getCodigo() + "','" + pessoa.getNome() + "', '" + pessoa.getEndereco() + "','" + pessoa.getCpf()
 					+ "','" + ((Funcionario) pessoa).getProfissao()
 					+ "', '" + ((Funcionario)pessoa).getSalario() +"' '"+((Funcionario)pessoa).getComissao()+"');"; 
