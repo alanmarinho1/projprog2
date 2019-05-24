@@ -1,3 +1,4 @@
+package Negocios;
 
 public class Pedido {
 
@@ -18,6 +19,9 @@ public class Pedido {
 		this.caixa = caixa;
 		this.total = total;
 	}
+	
+	public Pedido() {}
+	
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}

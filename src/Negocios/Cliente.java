@@ -1,27 +1,30 @@
+package Negocios;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Cliente extends Pessoa{
 
-	private String rg;
+	private int rg;
 	private String email;
 	private String telefone;
-	private String nascimento;
+	private Calendar nascimento = Calendar.getInstance();
 
-	public Cliente(String nome, String cpf, String endereco, String rg, String email, String telefone,
-			String nascimento) {
+	public Cliente(String nome, String cpf, String endereco, int rg, String email, String telefone,
+			Calendar nascimento) {
 		super(nome, cpf, endereco);
 		this.rg = rg;
 		this.email = email;
 		this.telefone = telefone;
 		this.nascimento = nascimento;
 	}
+	
+	public Cliente() {}
 
-	public String getRg() {
+	public int getRg() {
 		return rg;
 	}
 
-	public void setRg(String rg) {
+	public void setRg(int rg) {
 		this.rg = rg;
 	}
 
@@ -41,14 +44,14 @@ public class Cliente extends Pessoa{
 		this.telefone = telefone;
 	}
 
-	public String getNascimento() {
+	public Calendar getNascimento() {
 		return nascimento;
 	}
 
-	public void setNascimento(String nascimento) {
+	public void setNascimento(Calendar nascimento) {
 		this.nascimento = nascimento;
 	}
-	
+
 	public void historicoPedidos(){
 	
 		

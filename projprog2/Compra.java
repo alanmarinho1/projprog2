@@ -1,3 +1,4 @@
+package Negocios;
 
 public class Compra {
 

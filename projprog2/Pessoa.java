@@ -1,3 +1,4 @@
+package Negocios;
 
 public class Pessoa {
 
@@ -12,6 +13,7 @@ public class Pessoa {
 		this.endereco = endereco;
 	}
 	
+	public Pessoa() {}
 	
 	public String getNome() {
 		return nome;

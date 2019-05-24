@@ -1,3 +1,4 @@
+package Negocios;
 
 public class Funcionario extends Pessoa{
 
@@ -11,6 +12,8 @@ public class Funcionario extends Pessoa{
 		this.salario = salario;
 		this.comissao = comissao;
 	}
+	
+	public Funcionario() {}
 
 	public String getProfissao() {
 		return profissao;

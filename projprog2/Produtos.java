@@ -1,3 +1,6 @@
+package Negocios;
+
+import java.util.Calendar;
 
 public class Produtos {
 	
@@ -5,6 +8,7 @@ public class Produtos {
 	private String descricao;
 	private int quantidade;
 	private double valor;
+	private Calendar diadasemana;
 	
 	
 	public Produtos(int codigo, String descricao, int quantidade, double valor) {
@@ -14,6 +18,8 @@ public class Produtos {
 		this.quantidade = quantidade;
 		this.valor = valor;
 	}
+	
+	public Produtos() {}
 	
 	public String getDescricao() {
 		return descricao;
@@ -40,6 +46,14 @@ public class Produtos {
 
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
+	}
+
+	public Calendar getDiadasemana() {
+		return diadasemana;
+	}
+
+	public void setDiadasemana(Calendar diadasemana) {
+		this.diadasemana = diadasemana;
 	}
 
 	public void estoque() {
