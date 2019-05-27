@@ -33,7 +33,7 @@ public class RepositorioFuncionarioBD implements RepositorioPessoa{
 			resultset = BD.getInstance().getStatement().executeQuery(query);
 		
 			if(resultset != null && resultset.next()){
-    			resultado.setCodigo(resultset.getString("codigo"));
+    			resultado.setCodigo(resultset.getString("id_funcionario"));
     			resultado.setNome(resultset.getString("nome"));
     			resultado.setEndereco(resultset.getString("endereco"));
     			((Funcionario)resultado).setCpf(resultset.getString("cpf"));
@@ -81,7 +81,7 @@ public class RepositorioFuncionarioBD implements RepositorioPessoa{
 		String query = "SELECT * FROM funcionario ORDER BY id_funcionario";
 		BD.getInstance().setResultset(BD.getInstance().getStatement().executeQuery(query));
 		while(BD.getInstance().getResultset().next()) {
-			System.out.println("ID: " + BD.getInstance().getResultset().getString("codigo") + 
+			System.out.println("ID: " + BD.getInstance().getResultset().getString("id_funcionario") + 
 					"\nNome: " + BD.getInstance().getResultset().getString("nome") + 
 					"\nEmail: " + BD.getInstance().getResultset().getString("Endereco") +
 					"\nCPF: " + BD.getInstance().getResultset().getString("cpf") + 

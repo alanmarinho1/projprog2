@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 public class Pedido {
 
+	private String codigo;
 	private Funcionario funcionario;
 	private Cliente cliente;
 	private Produtos produto;
@@ -70,6 +71,15 @@ public class Pedido {
 
 	public void setNumeroitens(int numeroitens) {
 		this.numeroitens = numeroitens;
+	}
+
+	
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public double promoDia (Produtos produto) {

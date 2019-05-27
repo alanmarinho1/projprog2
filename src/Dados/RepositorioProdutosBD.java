@@ -29,7 +29,7 @@ public class RepositorioProdutosBD implements RepositorioProdutos {
 		BD.getInstance().conectar();
 		try {
 			String query = "UPDATE produto SET descricao = '" + produto.getDescricao() + "', quantidade = '" + produto.getQuantidade() + "'"
-					+ ", valorvenda= '" + produto.getValorvenda() + "', valorcompra = '" + produto.getValorcompra() + "' WHERE codigo = '" + produto.getCodigo() + "';"; 
+					+ ", valorvenda= '" + produto.getValorvenda() + "', valorcompra = '" + produto.getValorcompra() + "' WHERE id_produto = '" + produto.getCodigo() + "';"; 
 			BD.getInstance().getStatement().executeUpdate(query);
 		} catch(Exception e) {
 			System.out.println("Erro: " + e.getMessage());
@@ -44,11 +44,11 @@ public class RepositorioProdutosBD implements RepositorioProdutos {
 		Produtos resultado = new Produtos();
 		ResultSet resultset;
 		try {
-			String query = "SELECT * FROM produto WHERE codigo = '" + codigo + "';";
+			String query = "SELECT * FROM produto WHERE id_produto = '" + codigo + "';";
 			resultset = BD.getInstance().getStatement().executeQuery(query);
 		
 			if(resultset != null && resultset.next()){
-    			resultado.setCodigo(resultset.getString("codigo"));
+    			resultado.setCodigo(resultset.getString("id_produto"));
     			resultado.setDescricao(resultset.getString("descricao"));
     			resultado.setQuantidade(resultset.getInt("quantidade"));
     			resultado.setValorvenda(resultset.getDouble("valorvenda"));
@@ -61,12 +61,6 @@ public class RepositorioProdutosBD implements RepositorioProdutos {
 			System.out.println("Erro: Não foi possivel pesquisar" + e.getMessage());
 			}
 		return resultado;
-	}
-
-	@Override
-	public void remover(String codigo) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

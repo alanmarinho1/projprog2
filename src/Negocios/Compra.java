@@ -1,10 +1,15 @@
 package Negocios;
 
+import java.util.Calendar;
+
 public class Compra {
 
 	private Produtos produto;
 	private Funcionario funcionario;
 	private Financeiro caixa;
+	private int numeroitens;
+	private String Codigo;
+	private Calendar datacompra = Calendar.getInstance();
 	private double total;
 		
 	
@@ -14,6 +19,9 @@ public class Compra {
 		this.funcionario = funcionario;
 		this.caixa = caixa;
 		this.total = total;
+	}
+	public Compra() {
+		
 	}
 	public Produtos getProduto() {
 		return produto;
@@ -41,8 +49,26 @@ public class Compra {
 		this.caixa = caixa;
 	}
 
-
-
+	public Calendar getDatacompra() {
+		return datacompra;
+	}
+	public void setDatacompra(Calendar datacompra) {
+		this.datacompra = datacompra;
+	}
+	
+	public int getNumeroitens() {
+		return numeroitens;
+	}
+	public void setNumeroitens(int numeroitens) {
+		this.numeroitens = numeroitens;
+	}
+	
+	public String getCodigo() {
+		return Codigo;
+	}
+	public void setCodigo(String codigo) {
+		Codigo = codigo;
+	}
 	public void realizarCompra() {
 		
 		//aqui posso realizar compras de um ou mais produtos debitando do saldo total do meu caixa

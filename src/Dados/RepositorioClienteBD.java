@@ -32,7 +32,7 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 			resultset = BD.getInstance().getStatement().executeQuery(query);
 		
 			if(resultset != null && resultset.next()){
-    			resultado.setCodigo(resultset.getString("codigo"));
+    			resultado.setCodigo(resultset.getString("id_cliente"));
     			resultado.setNome(resultset.getString("nome"));
     			((Cliente)resultado).setEmail(resultset.getString("email"));
     			resultado.setEndereco(resultset.getString("endereco"));
@@ -77,7 +77,7 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 		String query = "SELECT * FROM cliente WHERE tipo ORDER BY id_cliente";
 		BD.getInstance().setResultset(BD.getInstance().getStatement().executeQuery(query));
 		while(BD.getInstance().getResultset().next()) {
-			System.out.println("ID: " + BD.getInstance().getResultset().getString("codigo") + "\nNome: " + BD.getInstance().getResultset().getString("nome") + 
+			System.out.println("ID: " + BD.getInstance().getResultset().getString("id_cliente") + "\nNome: " + BD.getInstance().getResultset().getString("nome") + 
 					"\nEmail: " + BD.getInstance().getResultset().getString("email") + "\nEndereço: " + BD.getInstance().getResultset().getString("endereco") +
 					"\nCPF: " + BD.getInstance().getResultset().getString("cpf") + "\nRG: " + BD.getInstance().getResultset().getString("rg") +
 					"\nData de Nascimento: " + BD.getInstance().getResultset().getString("nascimento") + "\n");
