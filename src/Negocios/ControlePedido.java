@@ -39,9 +39,12 @@ public class ControlePedido {
 		}
 	}
 	
-	public void remover(String codPedido) {
-		
+	public void remover(String codPedido) throws NaoLocalizadoPedidoException {
+		if (pedidos.procurar(codPedido).getCodigo() == null) {
+			throw new NaoLocalizadoPedidoException(codPedido);
+		}else {
 		pedidos.remover(codPedido);
+		}
 	}
 	
 	public void listar() {

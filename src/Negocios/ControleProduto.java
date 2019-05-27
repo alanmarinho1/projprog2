@@ -10,43 +10,39 @@ public class ControleProduto {
 	
 	//fazer a regra de negocio pra produtos depois
 	
-	public void cadastrar(Produto produto) throws InserirException {
-		if ((veiculo).getChassi().length() != 17 || (veiculo).getChassi().equals("")) {
+	public void cadastrar(Produtos produto) throws InserirException {
+		if ((produto).getChassi().length() != 17 || (produto).getChassi().equals("")) {
 			InserirException e;
-			e = new InserirException((veiculo).getChassi());
+			e = new InserirException((produto).getChassi());
 			throw e;
         }
 		
-					veiculos.inserir(veiculo);
+					produtos.inserir(produto);
 					
 		}	
 	
-	public void alterar(Veiculo veiculo) throws InserirException {
-		if ((veiculo).getChassi().length() != 17 || (veiculo).getChassi().equals("")) {
+	public void alterar(Produtos produto) throws InserirException {
+		if ((produto).getChassi().length() != 17 || (produto).getChassi().equals("")) {
 			InserirException e;
-			e = new InserirException((veiculo).getChassi());
+			e = new InserirException((produto).getChassi());
 			throw e;
         }
 			
-					veiculos.alterar(veiculo);
+					produtos.alterar(produto);
 		}
      
-	public Veiculo procurar(String chassi) throws NaoLocalizadoVeiculoException{
-		if (veiculos.procurar(chassi).getCodVeiculo() == null) {
-			throw new NaoLocalizadoVeiculoException(chassi);
+	public Produtos procurar(String chassi) throws NaoLocalizadoProdutoException{
+		if (produtos.procurar(chassi).getCodigo() == null) {
+			throw new NaoLocalizadoProdutoException(chassi);
 		}else {
 			
-		return veiculos.procurar(chassi);
+		return produtos.procurar(chassi);
 		
 		}
 	}
-	
-	public void remover(String codVeiculo) {
-		veiculos.remover(codVeiculo);
-	}
 
 	public void listar() {
-		veiculos.listar();
+		produtos.listar();
 		
 	}
 	

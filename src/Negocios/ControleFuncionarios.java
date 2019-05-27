@@ -42,6 +42,7 @@ public class ControleFuncionarios {
 	}
 	
 	public void remover(String codigo) {
+		
 		funcionarios.remover(codigo);
 	}
 	
