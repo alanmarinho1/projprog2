@@ -52,7 +52,19 @@ public class RepositorioPedidoBD implements RepositorioPedido {
 		return resultado;
 	}
 
-	@Override
+	public void remover(String codigo) {
+		BD.getInstance().conectar();
+		System.out.println(codigo);
+		try {
+			String query = "DELETE FROM pedido WHERE id_pedido = " + codigo + ";";
+			BD.getInstance().getStatement().executeUpdate(query);
+		} catch(Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+		BD.getInstance().desconectar();
+		
+	}
+	
 	public void listar() {
 		
 		

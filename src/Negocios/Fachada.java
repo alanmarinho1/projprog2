@@ -10,6 +10,7 @@ public class Fachada {
 	private ControleCliente cliente;
 	private ControlePedido pedido;
 	private ControleProduto produtos;
+	private ControleCompra compra;
 	private static Fachada instance;
 	
 	public Fachada() {
@@ -18,6 +19,7 @@ public class Fachada {
 	cliente = new ControleCliente();
 	pedido = new ControlePedido();
 	produtos = new ControleProduto();
+	compra = new ControleCompra();
 	
 	}
 	
@@ -75,7 +77,6 @@ public class Fachada {
 	public void removerPedido(String codPedido) {
 		pedido.remover(codPedido);
 	}
-	
 	
 	
 	public void cadastrarVeiculo(Veiculo veiculo) throws InserirException{
