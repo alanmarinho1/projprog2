@@ -9,7 +9,7 @@ public class ControleCompra {
 	RepositorioCompra compras = new RepositorioCompraBD();
 	
 	
-	public void cadastrar(Compra compra) throws PedidoException {
+	public void cadastrar(Compra compra) throws CompraException {
 		
 		/*	if(pedido.getFuncionario() == null) {
 				PedidoException e1;
@@ -17,23 +17,18 @@ public class ControleCompra {
 				throw e1;
 			}
 			
-	        if (pedido.getCliente() == null){
-	        	PedidoException e2;
-	        	e2 = new PedidoException(pedido.getCliente());
-				throw e2;
-	        }
 	        if (pedido.getProduto() == null){
-	        	PedidoException e3;
+	        	PedidoException e2;
 	        	e3 = new PedidoException(pedido.getProduto());
-				throw e3;
+				throw e2;
 	        }*/
 			compras.inserir(compra);
 		}
 	     
 	     
-		public Compra procurar(String codCompra) throws NaoLocalizadoPedidoException{
-		/*	if (pedidos.procurar(codPedido).getCodigo() == null) {
-				throw new NaoLocalizadoPedidoException(codPedido);
+		public Compra procurar(String codCompra) throws NaoLocalizadaCompraException{
+		/*	if (compras.procurar(codPedido).getCodigo() == null) {
+				throw new NaoLocalizadaCompraException(codCompra);
 			}else {*/
 				
 			return compras.procurar(codCompra);

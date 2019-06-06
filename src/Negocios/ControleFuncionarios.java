@@ -8,13 +8,19 @@ public class ControleFuncionarios {
 	
 	RepositorioPessoa funcionarios = new RepositorioFuncionarioBD();
     
-	public void cadastrar(Pessoa pessoa) throws InserirException{
+	public void cadastrar(Pessoa pessoa) throws InserirException, PessoaJaExisteException{
 		
 	/*	if (((Funcionario)pessoa).getCpf().length() != 11 || ((Funcionario)pessoa).getCpf().equals("")) {
 			InserirException e;
 			e = new InserirException(((Funcionario)pessoa).getCpf());
 			throw e;
         }*/
+		
+		if (funcionarios.procurar(pessoa.getCpf()).getCodigo() == pessoa.getCpf()) {
+			PessoaJaExisteException e2;
+			e2 = new PessoaJaExisteException(pessoa.getCpf());
+			throw e2;
+		}
 					funcionarios.inserir(pessoa);
 		}
     
