@@ -5,7 +5,7 @@ import java.util.Calendar;
 
 import Negocios.Compra;
 
-public class RepositorioCompraBD {
+public class RepositorioCompraBD implements RepositorioCompra {
 
 	public void inserir(Compra compra) {
 		BD.getInstance().conectar();
@@ -47,5 +47,12 @@ public class RepositorioCompraBD {
 			System.out.println("Erro: Não foi possivel pesquisar" + e.getMessage());
 			}
 		return resultado;
+	}
+
+
+	@Override
+	public void listar() {
+		// TODO Auto-generated method stub
+		
 	}
 }

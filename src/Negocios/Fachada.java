@@ -8,18 +8,20 @@ public class Fachada {
 	
 	private ControleFuncionarios funcionarios;
 	private ControleCliente cliente;
-	private ControlePedido pedido;
+	private ControlePedido pedidos;
 	private ControleProduto produtos;
 	private ControleCompra compra;
+	private ControleFinanceiro financeiro;
 	private static Fachada instance;
 	
 	public Fachada() {
 	
 	funcionarios = new ControleFuncionarios();
 	cliente = new ControleCliente();
-	pedido = new ControlePedido();
+	pedidos = new ControlePedido();
 	produtos = new ControleProduto();
 	compra = new ControleCompra();
+	financeiro = new ControleFinanceiro();
 	
 	}
 	
@@ -63,38 +65,20 @@ public class Fachada {
 	}
 	
 	public void cadastrarPedido(Pedido pedido) throws PedidoException{
-		pedido.cadastrar(pedido);
+		pedidos.cadastrar(pedido);
 	}
-	
-	public void alterarPedido(Pedido pedido) throws PedidoException {
-		pedido.alterar(pedido);
-    }
 	
 	public Pedido procurarPedido(String codPedido) throws NaoLocalizadoPedidoException{
-		return pedido.procurar(codPedido);
+		return pedidos.procurar(codPedido);
 	}
 	
-	public void removerPedido(String codPedido) {
-		pedido.remover(codPedido);
+	public void removerPedido(String codPedido) throws NaoLocalizadoPedidoException {
+		pedidos.remover(codPedido);
 	}
 	
-	
-	public void cadastrarVeiculo(Veiculo veiculo) throws InserirException{
-		veiculos.cadastrar(veiculo);
+	public void alterarFinanceiro (Financeiro caixa) {
+		financeiro.alterar(caixa);
 	}
-	
-	public void alterarVeiculo(Veiculo veiculo) throws InserirException{
-		veiculos.alterar(veiculo);
-    }
-     
-	public Veiculo procurarVeiculo(String chassi) throws NaoLocalizadoVeiculoException{
-		return veiculos.procurar(chassi);
-	}
-	
-	public void removerVeiculo(String chassi) {
-		veiculos.remover(chassi);
-	}
-	
-	
+		
 	
 }

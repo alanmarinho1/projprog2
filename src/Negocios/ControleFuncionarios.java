@@ -10,36 +10,36 @@ public class ControleFuncionarios {
     
 	public void cadastrar(Pessoa pessoa) throws InserirException{
 		
-		if (((Funcionario)pessoa).getCpf().length() != 11 || ((Funcionario)pessoa).getCpf().equals("")) {
+	/*	if (((Funcionario)pessoa).getCpf().length() != 11 || ((Funcionario)pessoa).getCpf().equals("")) {
 			InserirException e;
 			e = new InserirException(((Funcionario)pessoa).getCpf());
 			throw e;
-        }
+        }*/
 					funcionarios.inserir(pessoa);
 		}
     
      
 	public void alterar(Pessoa pessoa)throws InserirException {
 	
-	if (((Funcionario)pessoa).getCpf().length() != 11 || ((Funcionario)pessoa).getCpf().equals("")) {
+	/* if (((Funcionario)pessoa).getCpf().length() != 11 || ((Funcionario)pessoa).getCpf().equals("")) {
 		InserirException e;
 		e = new InserirException(((Funcionario)pessoa).getCpf());
 		throw e;
-    }
+    }*/
 	
 	
 	 		funcionarios.alterar(pessoa);
     }    
      
 	public Pessoa procurar(String cpf) throws NaoLocalizadaPessoaException{
-		if (funcionarios.procurar(cpf).getCodigo() == null) {
+	/*	if (funcionarios.procurar(cpf).getCodigo() == null) {
 		throw new NaoLocalizadaPessoaException(cpf);
-		}else {
+		}else { */
 		
 			return funcionarios.procurar(cpf);
 	
 		}
-	}
+//	}
 	
 	public void remover(String codigo) {
 		

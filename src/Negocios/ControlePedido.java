@@ -10,7 +10,7 @@ public class ControlePedido {
     
 	public void cadastrar(Pedido pedido) throws PedidoException {
 		
-		if(pedido.getFuncionario() == null) {
+	/*	if(pedido.getFuncionario() == null) {
 			PedidoException e1;
 			e1 = new PedidoException(pedido.getFuncionario());
 			throw e1;
@@ -25,27 +25,27 @@ public class ControlePedido {
         	PedidoException e3;
         	e3 = new PedidoException(pedido.getProduto());
 			throw e3;
-        }
+        }*/
 		pedidos.inserir(pedido);
 	}
      
      
 	public Pedido procurar(String codPedido) throws NaoLocalizadoPedidoException{
-		if (pedidos.procurar(codPedido).getCodigo() == null) {
+	/*	if (pedidos.procurar(codPedido).getCodigo() == null) {
 			throw new NaoLocalizadoPedidoException(codPedido);
-		}else {
+		}else {*/
 			
 		return pedidos.procurar(codPedido);
 		}
-	}
+//	}
 	
 	public void remover(String codPedido) throws NaoLocalizadoPedidoException {
-		if (pedidos.procurar(codPedido).getCodigo() == null) {
+	/*	if (pedidos.procurar(codPedido).getCodigo() == null) {
 			throw new NaoLocalizadoPedidoException(codPedido);
-		}else {
+		}else {*/
 		pedidos.remover(codPedido);
 		}
-	}
+	//}
 	
 	public void listar() {
 		pedidos.listar();

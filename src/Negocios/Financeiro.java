@@ -26,4 +26,6 @@ public class Financeiro {
 		setSaldo(getSaldo() - valor);
 	}
 	
+	public void historico() {}
+	
 }
