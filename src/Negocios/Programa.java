@@ -5,9 +5,13 @@ public class Programa {
 
 	public static void main(String[] args) {
 		
-		Financeiro caixa = new Financeiro();
-		caixa.creditar(300);
-		Fachada.getInstance().alterarFinanceiro(caixa);
+		Financeiro.creditar(300);
+		try {
+			Fachada.getInstance().alterarFinanceiro();
+		} catch (FinanceiroException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //		Cliente cliente = new Cliente();
 /*		Funcionario funcionario = new Funcionario("Alan", "123123123", "rua tal", "Vendedor", 1200, 0.03);
 		Produtos produto1 = new Produtos(1, "hamburguer", 3, 15);

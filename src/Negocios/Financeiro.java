@@ -17,11 +17,11 @@ public class Financeiro {
 		Financeiro.saldo = saldo;
 	}
 
-	public void creditar(double valor) {
+	public static void creditar(double valor) {
 		setSaldo(getSaldo() + valor);
 	}
 	
-	public void debitar(double valor) {
+	public static void debitar(double valor) {
 		
 		setSaldo(getSaldo() - valor);
 	}

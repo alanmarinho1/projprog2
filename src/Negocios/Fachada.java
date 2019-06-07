@@ -31,7 +31,7 @@ public class Fachada {
 		}
 		return Fachada.instance;
 	}
-	public void cadastrarFuncionario(Pessoa pessoa) throws InserirException {
+	public void cadastrarFuncionario(Pessoa pessoa) throws InserirException, PessoaJaExisteException {
 		funcionarios.cadastrar(pessoa);
 	}
 	
@@ -76,8 +76,8 @@ public class Fachada {
 		pedidos.remover(codPedido);
 	}
 	
-	public void alterarFinanceiro (Financeiro caixa) {
-		financeiro.alterar(caixa);
+	public void alterarFinanceiro() throws FinanceiroException {
+		financeiro.alterar();
 	}
 		
 	

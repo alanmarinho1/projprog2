@@ -4,6 +4,6 @@ import Negocios.Financeiro;
 
 public interface RepositorioFinanceiro {
 
-	public void alterar(double saldo);
+	public void alterar();
 	
 }
