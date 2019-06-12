@@ -50,10 +50,11 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 	}
 
 	public void alterar(Pessoa pessoa) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		BD.getInstance().conectar();
 		try {
 			String query = "UPDATE cliente SET nome = '" + pessoa.getNome() + "', email = '" + ((Cliente)pessoa).getEmail() + "', endereco = '" + pessoa.getEndereco() + "'"
-					+ ", cpf = '" + pessoa.getCpf() + "', rg = '" + ((Cliente)pessoa).getRg() + "', nascimento = '" + ((Cliente)pessoa).getNascimento().getTime() + "' WHERE cpf = '" + pessoa.getCpf() + "';"; 
+					+ ", cpf = '" + pessoa.getCpf() + "', rg = '" + ((Cliente)pessoa).getRg() + "', nascimento = '" + sdf.format(((Cliente) pessoa).getNascimento().getTime()) + "' WHERE cpf = '" + pessoa.getCpf() + "';"; 
 			BD.getInstance().getStatement().executeUpdate(query);
 		} catch(Exception e) {
 			System.out.println("Erro: " + e.getMessage());
