@@ -11,7 +11,7 @@ public class ControleCliente {
     
 	public void cadastrar(Pessoa pessoa) throws InserirException, PessoaJaExisteException {
 		
-		if (pessoa.getCpf().length() != 11 || pessoa.getCpf().equals("")) {
+/*		if (pessoa.getCpf().length() != 11 || pessoa.getCpf().equals("")) {
 			InserirException e1;
 			e1 = new InserirException(pessoa.getCpf());
 			throw e1;		
@@ -22,7 +22,7 @@ public class ControleCliente {
 			PessoaJaExisteException e2;
 			e2 = new PessoaJaExisteException(pessoa.getCpf());
 			throw e2;
-		}
+		}*/
 
 			Cliente.inserir(pessoa);
         }

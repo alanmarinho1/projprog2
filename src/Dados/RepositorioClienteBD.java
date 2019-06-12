@@ -1,6 +1,7 @@
 package Dados;
 
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import Negocios.Cliente;
@@ -10,10 +11,11 @@ import Negocios.Pessoa;
 public class RepositorioClienteBD implements RepositorioPessoa {
 	
 	public void inserir(Pessoa pessoa) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		BD.getInstance().conectar();
 		try {
-			String query = "INSERT INTO cliente (id_cliente, nome, email, endereco, cpf, rg, nascimento) "
-					+ "VALUES ( '" + pessoa.getCodigo() + "', '" + pessoa.getNome() + "', '" + ((Cliente)pessoa).getEmail() + "', '" + pessoa.getEndereco() + "', '" + pessoa.getCpf() + "', '" + ((Cliente)pessoa).getRg() + "', '" + ((Cliente)pessoa).getNascimento().getTime()+ "');"; 
+			String query = "INSERT INTO cliente (nome, email, endereco, cpf, rg, nascimento) "
+					+ "VALUES ('" + pessoa.getNome() + "', '" + ((Cliente)pessoa).getEmail() + "', '" + pessoa.getEndereco() + "', '" + pessoa.getCpf() + "', '" + ((Cliente)pessoa).getRg() + "', '" + sdf.format(((Cliente) pessoa).getNascimento().getTime())+ "');"; 
 			
 			BD.getInstance().getStatement().executeUpdate(query);	
 		} catch(Exception e) {
@@ -74,7 +76,7 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 	public void listar() {
 		BD.getInstance().conectar();
 		try {
-		String query = "SELECT * FROM cliente WHERE tipo ORDER BY id_cliente";
+		String query = "SELECT * FROM cliente ORDER BY id_cliente";
 		BD.getInstance().setResultset(BD.getInstance().getStatement().executeQuery(query));
 		while(BD.getInstance().getResultset().next()) {
 			System.out.println("ID: " + BD.getInstance().getResultset().getString("id_cliente") + "\nNome: " + BD.getInstance().getResultset().getString("nome") + 

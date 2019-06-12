@@ -64,6 +64,10 @@ public class Fachada {
 		cliente.remover(id);
 	}
 	
+	public void listarCliente() {
+		cliente.listar();
+	}
+	
 	public void cadastrarPedido(Pedido pedido) throws PedidoException{
 		pedidos.cadastrar(pedido);
 	}

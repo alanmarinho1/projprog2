@@ -8,7 +8,10 @@ public class Cliente extends Pessoa{
 	private String email;
 	private String telefone;
 	private Calendar nascimento = Calendar.getInstance();
-
+	private Date data;
+	
+	
+	
 	public Cliente(String nome, String cpf, String endereco, int rg, String email, String telefone,
 			Calendar nascimento) {
 		super(nome, cpf, endereco);
@@ -17,7 +20,7 @@ public class Cliente extends Pessoa{
 		this.telefone = telefone;
 		this.nascimento = nascimento;
 	}
-	
+
 	public Cliente() {}
 
 	public int getRg() {
@@ -51,6 +54,8 @@ public class Cliente extends Pessoa{
 	public void setNascimento(Calendar nascimento) {
 		this.nascimento = nascimento;
 	}
+	
+	
 
 	public void historicoPedidos(){
 	
