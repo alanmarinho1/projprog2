@@ -99,7 +99,7 @@ public class Pedido {
 
 	public void PedidoRealizado() {
 		funcionario.setComissao(getTotal() * 0.2);
-		caixa.creditar(getTotal());
+		Financeiro.creditar(getTotal());
 	}
 	
 }

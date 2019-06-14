@@ -66,7 +66,7 @@ public class Tela_Inicial extends JFrame {
 		primeiratelafunc.setLayout(null);
 		primeiratelafunc.setVisible(false);
 		
-		PrimeiraTelaVeiculo primeiratelaveiculo = new PrimeiraTelaVeiculo();
+		PrimeiraTelaProduto primeiratelaveiculo = new PrimeiraTelaProduto();
 		contentPane.add(primeiratelaveiculo, "name_36913728240865");
 		primeiratelaveiculo.setLayout(null);
 		primeiratelaveiculo.setVisible(false);

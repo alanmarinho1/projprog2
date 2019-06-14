@@ -83,6 +83,21 @@ public class Fachada {
 	public void alterarFinanceiro() throws FinanceiroException {
 		financeiro.alterar();
 	}
-		
+
+	public void cadastrarProduto(Produtos produto) throws InserirException, ProdutoJaExisteException {
+		produtos.cadastrar(produto);
+	}
+	
+	public void alterarProduto(Produtos produto) throws InserirException, ProdutoJaExisteException {
+		produtos.alterar(produto);
+	}
+	
+	public void procurarProduto(String codigo) throws NaoLocalizadoProdutoException {
+		produtos.procurar(codigo);
+	}
+	
+	public void listarProduto() {
+		produtos.listar();
+	}
 	
 }

@@ -3,6 +3,7 @@ package GUI;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,7 +25,7 @@ public class PrimeiraTelaCliente extends JPanel {
 	public PrimeiraTelaCliente() {
 		setLayout(null);
 		
-		JLabel lblCCliente = new JLabel("CCliente:");
+		JLabel lblCCliente = new JLabel("Cliente:");
 		lblCCliente.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCCliente.setBounds(10, 11, 63, 22);
 		add(lblCCliente);
@@ -75,14 +76,14 @@ public class PrimeiraTelaCliente extends JPanel {
 				
 				painelcriarcliente.setVisible(false);
 				painelprocurarcliente.setVisible(true);
-				
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				 painelprocurarcliente.getTextFieldCodigo2().setText(achouCliente.getCodigo());
 				 painelprocurarcliente.getTextFieldNome2().setText(achouCliente.getNome());
 				 painelprocurarcliente.getTextFieldRG2().setText(String.valueOf(achouCliente.getRg()));
 				 painelprocurarcliente.getTextFieldEndereco2().setText(achouCliente.getEndereco());
 				 painelprocurarcliente.getTextFieldEmail2().setText(achouCliente.getEmail());
-				 painelprocurarcliente.getTextFieldCCliente2().setText(achouCliente.getCpf());
-				 painelprocurarcliente.getTextFieldDataNasc2().setText(achouCliente.getDataNascimento());
+				 painelprocurarcliente.getTextFieldCPF2().setText(achouCliente.getCpf());
+				 painelprocurarcliente.getTextFieldDataNasc2().setText(sdf.format(achouCliente.getNascimento().getTime()));
 				
 			}
 		});

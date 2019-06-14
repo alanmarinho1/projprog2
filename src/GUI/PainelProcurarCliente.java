@@ -3,19 +3,21 @@ package GUI;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.JTextField;
 
+import Negocios.Cliente;
 import Negocios.Fachada;
 import Negocios.InserirException;
-import Negocios.PessoaFisica;
+import Negocios.PessoaJaExisteException;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 
-public class PainelProcurarPF extends JPanel {
+public class PainelProcurarCliente extends JPanel {
 	private JTextField textFieldCodigo2;
 	private JTextField textFieldNome2;
 	private JTextField textFieldEmail2;
@@ -28,7 +30,7 @@ public class PainelProcurarPF extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PainelProcurarPF() {
+	public PainelProcurarCliente() {
 		setLayout(null);
 		
 		JLabel label = new JLabel("C\u00F3digo:");
@@ -112,25 +114,35 @@ public class PainelProcurarPF extends JPanel {
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PessoaFisica pessoafisica = new PessoaFisica();
-				pessoafisica.setNome(textFieldNome2.getText());
-				pessoafisica.setEmail(textFieldEmail2.getText());
-				pessoafisica.setEndereco(textFieldEndereco2.getText());
-				pessoafisica.setCpf(textFieldCPF2.getText());
+				DateFormat f = DateFormat.getDateInstance();
+				Cliente cliente = new Cliente();
+				cliente.setNome(textFieldNome2.getText());
+				cliente.setEmail(textFieldEmail2.getText());
+				cliente.setEndereco(textFieldEndereco2.getText());
+				cliente.setCpf(textFieldCPF2.getText());
+				try {
+					cliente.getNascimento().setTime(f.parse(textFieldDataNasc2.getText()));
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+				
 				while(true) {
 					try {
-						pessoafisica.setRg(Integer.parseInt(textFieldRG2.getText()));
+						cliente.setRg(Integer.parseInt(textFieldRG2.getText()));
 					} catch (NumberFormatException e2) {
 						JOptionPane.showMessageDialog(null, "Favor inserir somente numeros (Campo RG)");
 						e2.printStackTrace();
 						break;
 					}
 					try {
-						Fachada.getInstance().alterarPessoaFisica(pessoafisica);
+						Fachada.getInstance().alterarCliente(cliente);
 					} catch (InserirException e1) {
 						JOptionPane.showMessageDialog(null, "Digite um CPF válido");
 						e1.printStackTrace();
 						break;
+					} catch (PessoaJaExisteException e1) {
+						JOptionPane.showMessageDialog(null, "Ja existe Cliente com este CPF");
+						e1.printStackTrace();
 					}
 				JOptionPane.showMessageDialog(null, "Cliente Alterado com Sucesso!");
 				btnSalvar.setVisible(false);
@@ -146,9 +158,9 @@ public class PainelProcurarPF extends JPanel {
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PessoaFisica pessoafisica = new PessoaFisica();
-				pessoafisica.setCodigo((textFieldCodigo2.getText()));
-				Fachada.getInstance().removerPessoaFisica((pessoafisica.getCodigo()));
+				Cliente cliente = new Cliente();
+				cliente.setCodigo((textFieldCodigo2.getText()));
+				Fachada.getInstance().removerCliente((cliente.getCodigo()));
 				JOptionPane.showMessageDialog(null, "Cliente Excluido com Sucesso!");
 			}
 		});

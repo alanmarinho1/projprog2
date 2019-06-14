@@ -4,7 +4,7 @@ public class Funcionario extends Pessoa{
 
 	private String profissao;
 	private double salario;
-	private double comissao;
+	private double comissao = 0;
 	
 	public Funcionario(String nome, String cpf, String endereco, String profissao, double salario, double comissao) {
 		super(nome, cpf, endereco);
@@ -39,8 +39,11 @@ public class Funcionario extends Pessoa{
 		this.comissao = comissao;
 	}
 	
-	public void receberComissao(double valor) {
+	public double receberSalario() {
 		
-		setSalario(getSalario() + getComissao());
+		double total = getSalario() + getComissao();
+		setComissao(0);
+		
+		return total;
 	}
 }
