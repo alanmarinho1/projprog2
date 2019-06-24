@@ -1,51 +1,62 @@
 package Negocios;
 
 
+import Dados.RepositorioFuncionario;
 import Dados.RepositorioFuncionarioBD;
-import Dados.RepositorioPessoa;
 
 public class ControleFuncionarios {
 	
-	RepositorioPessoa funcionarios = new RepositorioFuncionarioBD();
+	RepositorioFuncionario funcionarios = new RepositorioFuncionarioBD();
     
-	public void cadastrar(Pessoa pessoa) throws InserirException, PessoaJaExisteException{
+	public void cadastrar(Funcionario funcionario) throws InserirException, PessoaJaExisteException{
 		
-	/*	if (((Funcionario)pessoa).getCpf().length() != 11 || ((Funcionario)pessoa).getCpf().equals("")) {
+		if (funcionario.getCpf().length() != 11 || funcionario.getCpf().equals("")) {
 			InserirException e;
-			e = new InserirException(((Funcionario)pessoa).getCpf());
+			e = new InserirException(((Funcionario)funcionario).getCpf());
 			throw e;
-        }*/
+        }
 		
-		if (funcionarios.procurar(pessoa.getCpf()).getCodigo() == pessoa.getCpf()) {
+		if (funcionarios.procurar(funcionario.getCodigo()).getUsuario()  == funcionario.getUsuario()) {
 			PessoaJaExisteException e2;
-			e2 = new PessoaJaExisteException(pessoa.getCpf());
+			e2 = new PessoaJaExisteException(funcionario.getUsuario());
 			throw e2;
 		}
-					funcionarios.inserir(pessoa);
+					funcionarios.inserir(funcionario);
 		}
     
      
-	public void alterar(Pessoa pessoa)throws InserirException {
+	public void alterar(Funcionario funcionario)throws InserirException, PessoaJaExisteException {
 	
-	/* if (((Funcionario)pessoa).getCpf().length() != 11 || ((Funcionario)pessoa).getCpf().equals("")) {
+	 if (((Funcionario)funcionario).getCpf().length() != 11 || ((Funcionario)funcionario).getCpf().equals("")) {
 		InserirException e;
-		e = new InserirException(((Funcionario)pessoa).getCpf());
+		e = new InserirException(((Funcionario)funcionario).getCpf());
 		throw e;
-    }*/
+    }
+	 if (funcionarios.procurar(funcionario.getCodigo()).getUsuario()  == funcionario.getUsuario()) {
+			PessoaJaExisteException e2;
+			e2 = new PessoaJaExisteException(funcionario.getUsuario());
+			throw e2;
+		}
 	
-	
-	 		funcionarios.alterar(pessoa);
+	 		funcionarios.alterar(funcionario);
     }    
-     
-	public Pessoa procurar(String cpf) throws NaoLocalizadaPessoaException{
-	/*	if (funcionarios.procurar(cpf).getCodigo() == null) {
-		throw new NaoLocalizadaPessoaException(cpf);
-		}else { */
+	public Funcionario procurar(String usuario, String senha) throws NaoLocalizadoUsuarioException{
+			if (funcionarios.procurar(usuario, senha).getCodigo() == null) {
+			throw new NaoLocalizadoUsuarioException(usuario, senha);
+			}else {
+			
+				return funcionarios.procurar(usuario, senha);
+		}
+	}
+	public Funcionario procurar(String usuario) throws NaoLocalizadaPessoaException{
+		if (funcionarios.procurar(usuario).getCodigo() == null) {
+		throw new NaoLocalizadaPessoaException(usuario);
+		}else { 
 		
-			return funcionarios.procurar(cpf);
+			return funcionarios.procurar(usuario);
 	
 		}
-//	}
+	}
 	
 	public void remover(String codigo) {
 		

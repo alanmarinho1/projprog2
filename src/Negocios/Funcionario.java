@@ -2,16 +2,11 @@ package Negocios;
 
 public class Funcionario extends Pessoa{
 
+	private String usuario;
+	private String senha;
 	private String profissao;
 	private double salario;
 	private double comissao = 0;
-	
-	public Funcionario(String nome, String cpf, String endereco, String profissao, double salario, double comissao) {
-		super(nome, cpf, endereco);
-		this.profissao = profissao;
-		this.salario = salario;
-		this.comissao = comissao;
-	}
 	
 	public Funcionario() {}
 
@@ -39,6 +34,22 @@ public class Funcionario extends Pessoa{
 		this.comissao = comissao;
 	}
 	
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	public double receberSalario() {
 		
 		double total = getSalario() + getComissao();

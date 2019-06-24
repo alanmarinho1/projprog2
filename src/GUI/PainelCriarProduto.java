@@ -14,6 +14,8 @@ import Negocios.Produtos;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
@@ -82,6 +84,22 @@ public class PainelCriarProduto extends JPanel {
 		lblQuantidade.setBounds(17, 110, 86, 18);
 		add(lblQuantidade);
 		
+		JLabel lblPromooDoDia = new JLabel("Promo\u00E7\u00E3o do dia:");
+		lblPromooDoDia.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPromooDoDia.setBounds(227, 92, 114, 20);
+		add(lblPromooDoDia);
+		
+		JComboBox comboBoxDiadaSemana = new JComboBox();
+		comboBoxDiadaSemana.setBounds(344, 92, 114, 20);
+		add(comboBoxDiadaSemana);
+		comboBoxDiadaSemana.addItem("Segunda-feira");
+		comboBoxDiadaSemana.addItem("Terça-feira");
+		comboBoxDiadaSemana.addItem("Quarta-feira");
+		comboBoxDiadaSemana.addItem("Quinta-feira");
+		comboBoxDiadaSemana.addItem("Sexta-feira");
+		comboBoxDiadaSemana.addItem("Sabado");
+		comboBoxDiadaSemana.addItem("Domingo");
+		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -91,7 +109,8 @@ public class PainelCriarProduto extends JPanel {
 				Produtos produto = new Produtos();
 	
 				produto.setDescricao(textFieldDescricao.getText());
-				produto.setCombustivel(textFieldCombustivel.getText());
+				produto.setQuantidade(Integer.parseInt(textFieldQuantidade.getText()));
+				produto.setDiadasemana((String) comboBoxDiadaSemana.getSelectedItem());
 				
 				
 				try {
@@ -145,18 +164,10 @@ public class PainelCriarProduto extends JPanel {
 		btnSalvar.setBounds(300, 145, 89, 23);
 		add(btnSalvar);
 		
-		JLabel lblPromooDoDia = new JLabel("Promo\u00E7\u00E3o do dia:");
-		lblPromooDoDia.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblPromooDoDia.setBounds(227, 92, 114, 20);
-		add(lblPromooDoDia);
 		
-		JComboBox comboBoxDiadaSemana = new JComboBox();
-		comboBoxDiadaSemana.setBounds(344, 92, 96, 20);
-		add(comboBoxDiadaSemana);
 		
-		private void carregarComboBox() {
-			
-		}
+		
 
 	}
+	
 }

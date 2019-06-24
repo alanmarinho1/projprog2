@@ -2,50 +2,57 @@ package Negocios;
 
 
 import Dados.RepositorioClienteBD;
-import Dados.RepositorioPessoa;
+import Dados.RepositorioCliente;
 
 
 public class ControleCliente {
 	
-	RepositorioPessoa Cliente = new RepositorioClienteBD();
+	RepositorioCliente Cliente = new RepositorioClienteBD();
     
-	public void cadastrar(Pessoa pessoa) throws InserirException, PessoaJaExisteException {
+	public void cadastrar(Cliente cliente) throws InserirException, PessoaJaExisteException {
 		
-/*		if (pessoa.getCpf().length() != 11 || pessoa.getCpf().equals("")) {
+		if (cliente.getCpf().length() != 11 || cliente.getCpf().equals("")) {
 			InserirException e1;
-			e1 = new InserirException(pessoa.getCpf());
+			e1 = new InserirException(cliente.getCpf());
 			throw e1;		
 			
 		}
 		
-		if (Cliente.procurar(pessoa.getCpf()).getCodigo() == pessoa.getCpf()) {
+		if (cliente.getNome().equals("")) {
+			InserirException e1;
+			e1 = new InserirException(cliente.getNome());
+			throw e1;		
+			
+		}
+		
+		if (Cliente.procurar(cliente.getCpf()).getCodigo() == cliente.getCpf()) {
 			PessoaJaExisteException e2;
-			e2 = new PessoaJaExisteException(pessoa.getCpf());
+			e2 = new PessoaJaExisteException(cliente.getCpf());
 			throw e2;
-		}*/
+		}
 
-			Cliente.inserir(pessoa);
+			Cliente.inserir(cliente);
         }
 	
 
      
-	public void alterar(Pessoa pessoa) throws InserirException, PessoaJaExisteException {
-		if (((Cliente)pessoa).getCpf().length() != 11 || ((Cliente)pessoa).getCpf().equals("")) {
+	public void alterar(Cliente cliente) throws InserirException, PessoaJaExisteException {
+		if (cliente.getCpf().length() != 11 || cliente.getCpf().equals("")) {
 			InserirException e1;
-			e1 = new InserirException(((Cliente)pessoa).getCpf());
+			e1 = new InserirException(cliente.getCpf());
 			throw e1;
         }
 		
-		if (Cliente.procurar(pessoa.getCpf()).getCodigo() == pessoa.getCpf()) {
+		if (Cliente.procurar(cliente.getCpf()).getCodigo() == cliente.getCpf()) {
 			PessoaJaExisteException e2;
-			e2 = new PessoaJaExisteException(pessoa.getCpf());
+			e2 = new PessoaJaExisteException(cliente.getCpf());
 			throw e2;
 		}
 		
-		 		Cliente.alterar(pessoa);
+		 		Cliente.alterar(cliente);
         }
     
-	public Pessoa procurar(String cpf) throws NaoLocalizadaPessoaException{
+	public Cliente procurar(String cpf) throws NaoLocalizadaPessoaException{
 		if (Cliente.procurar(cpf).getCodigo() == null) {
 			throw new NaoLocalizadaPessoaException(cpf);
 		}else {

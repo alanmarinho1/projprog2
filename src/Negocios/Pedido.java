@@ -1,5 +1,6 @@
 package Negocios;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Pedido {
@@ -9,19 +10,9 @@ public class Pedido {
 	private Cliente cliente;
 	private Produtos produto;
 	private int numeroitens;
-	private Financeiro caixa;
 	private Calendar data = Calendar.getInstance();
 	private double total;
 	
-	public Pedido(Funcionario funcionario, Cliente cliente, Produtos produto, Financeiro caixa,
-			double total) {
-		super();
-		this.funcionario = funcionario;
-		this.cliente = cliente;
-		this.produto = produto;
-		this.caixa = caixa;
-		this.total = total;
-	}
 	
 	public Pedido() {}
 	
@@ -44,12 +35,6 @@ public class Pedido {
 		this.produto = produto;
 	}
 	
-	public Financeiro getCaixa() {
-		return caixa;
-	}
-	public void setCaixa(Financeiro caixa) {
-		this.caixa = caixa;
-	}
 	public double getTotal() {
 		return total;
 	}
@@ -82,6 +67,7 @@ public class Pedido {
 		this.codigo = codigo;
 	}
 
+	
 	public double promoDia (Produtos produto) {
 		Calendar data = Calendar.getInstance();
 		if (produto.getDiadasemana().DAY_OF_WEEK == data.get(Calendar.DAY_OF_WEEK)) {

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -13,19 +14,18 @@ import javax.swing.JTextField;
 
 import Negocios.Fachada;
 import Negocios.InserirException;
-import Negocios.Veiculo;
+import Negocios.ProdutoJaExisteException;
+import Negocios.Produtos;
 
 public class PainelProcurarProduto extends JPanel {
 
-	private JTextField textFieldCodVeiculo2;
-	private JTextField textFieldFabricante2;
-	private JTextField textFieldModelo2;
-	private JTextField textFieldChassi2;
-	private JTextField textFieldValor2;
-	private JTextField textFieldCombustivel2;
-	private JTextField textFieldPlaca2;	
-	private JTextField textFieldEstoque2;
-	private JTextField textFieldCor2;
+	private JTextField textFieldCodigo2;
+	private JTextField textFieldDescricao2;
+	private JTextField textFieldValorVenda2;
+	private JTextField textFieldValorCompra2;
+	private JTextField textFieldQuantidade2;
+	private JComboBox comboBoxDiadaSemana2;
+	protected PainelProcurarProduto painelproduto;
 	
 	/**
 	 * Create the panel.
@@ -35,109 +35,131 @@ public class PainelProcurarProduto extends JPanel {
 
 		JLabel label = new JLabel("C\u00F3digo:");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		label.setBounds(10, 11, 71, 25);
+		label.setBounds(17, 17, 71, 25);
 		add(label);
 		
-		textFieldCodVeiculo2 = new JTextField();
-		textFieldCodVeiculo2.setEditable(false);
-		textFieldCodVeiculo2.setColumns(10);
-		textFieldCodVeiculo2.setBounds(82, 18, 76, 20);
-		add(textFieldCodVeiculo2);
+		textFieldCodigo2 = new JTextField();
+		textFieldCodigo2.setEditable(false);
+		textFieldCodigo2.setColumns(10);
+		textFieldCodigo2.setBounds(135, 21, 76, 20);
+		add(textFieldCodigo2);
 		
-		JLabel lblFabricante = new JLabel("Fabricante:");
-		lblFabricante.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFabricante.setBounds(10, 35, 86, 25);
-		add(lblFabricante);
+		JLabel lblDescrio = new JLabel("Descri\u00E7\u00E3o:");
+		lblDescrio.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDescrio.setBounds(17, 41, 86, 25);
+		add(lblDescrio);
 		
-		textFieldFabricante2 = new JTextField();
-		textFieldFabricante2.setEditable(false);
-		textFieldFabricante2.setColumns(10);
-		textFieldFabricante2.setBounds(82, 42, 148, 20);
-		add(textFieldFabricante2);
+		textFieldDescricao2 = new JTextField();
+		textFieldDescricao2.setEditable(false);
+		textFieldDescricao2.setColumns(10);
+		textFieldDescricao2.setBounds(135, 45, 174, 20);
+		add(textFieldDescricao2);
 		
-		JLabel lblModelo = new JLabel("Modelo:");
-		lblModelo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblModelo.setBounds(10, 60, 59, 21);
-		add(lblModelo);
+		JLabel lblValorDeVenda = new JLabel("Valor de Venda:");
+		lblValorDeVenda.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblValorDeVenda.setBounds(17, 66, 96, 21);
+		add(lblValorDeVenda);
 		
-		textFieldModelo2 = new JTextField();
-		textFieldModelo2.setEditable(false);
-		textFieldModelo2.setColumns(10);
-		textFieldModelo2.setBounds(82, 65, 148, 20);
-		add(textFieldModelo2);
+		textFieldValorVenda2 = new JTextField();
+		textFieldValorVenda2.setEditable(false);
+		textFieldValorVenda2.setColumns(10);
+		textFieldValorVenda2.setBounds(135, 71, 130, 20);
+		add(textFieldValorVenda2);
 		
-		JLabel lblPlaca = new JLabel("Placa:");
-		lblPlaca.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblPlaca.setBounds(10, 81, 71, 25);
-		add(lblPlaca);
+		JLabel lblValorDeCompra = new JLabel("Valor de Compra:");
+		lblValorDeCompra.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblValorDeCompra.setBounds(17, 87, 108, 25);
+		add(lblValorDeCompra);
 		
-		JLabel lblChassi = new JLabel("Chassi:");
-		lblChassi.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblChassi.setBounds(10, 103, 59, 30);
-		add(lblChassi);
+		textFieldValorCompra2 = new JTextField();
+		textFieldValorCompra2.setEditable(false);
+		textFieldValorCompra2.setColumns(10);
+		textFieldValorCompra2.setBounds(135, 91, 71, 20);
+		add(textFieldValorCompra2);
 		
-		textFieldChassi2 = new JTextField();
-		textFieldChassi2.setText("");
-		textFieldChassi2.setEditable(false);
-		textFieldChassi2.setColumns(10);
-		textFieldChassi2.setBounds(82, 113, 148, 20);
-		add(textFieldChassi2);
+		textFieldQuantidade2 = new JTextField();
+		textFieldQuantidade2.setEditable(false);
+		textFieldQuantidade2.setColumns(10);
+		textFieldQuantidade2.setBounds(135, 112, 86, 18);
+		add(textFieldQuantidade2);
 		
-		JLabel lblValor = new JLabel("Valor:");
-		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblValor.setBounds(10, 127, 52, 30);
-		add(lblValor);
+		JLabel lblQuantidade = new JLabel("Quantidade:");
+		lblQuantidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblQuantidade.setBounds(17, 110, 86, 18);
+		add(lblQuantidade);
 		
-		textFieldValor2 = new JTextField();
-		textFieldValor2.setEditable(false);
-		textFieldValor2.setColumns(10);
-		textFieldValor2.setBounds(82, 137, 76, 20);
-		add(textFieldValor2);
+		JLabel lblPromooDoDia = new JLabel("Promo\u00E7\u00E3o do dia:");
+		lblPromooDoDia.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPromooDoDia.setBounds(227, 92, 114, 20);
+		add(lblPromooDoDia);
 		
-		JLabel lblCombustivel = new JLabel("Combustivel:");
-		lblCombustivel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCombustivel.setBounds(240, 8, 89, 30);
-		add(lblCombustivel);
-		
-		textFieldCombustivel2 = new JTextField();
-		textFieldCombustivel2.setEditable(false);
-		textFieldCombustivel2.setColumns(10);
-		textFieldCombustivel2.setBounds(323, 15, 86, 20);
-		add(textFieldCombustivel2);
-		
-		textFieldPlaca2 = new JTextField();
-		textFieldPlaca2.setEditable(false);
-		textFieldPlaca2.setColumns(10);
-		textFieldPlaca2.setBounds(82, 88, 71, 20);
-		add(textFieldPlaca2);
+		JComboBox comboBoxDiadaSemana2 = new JComboBox();
+		comboBoxDiadaSemana2.setBounds(344, 92, 114, 20);
+		add(comboBoxDiadaSemana2);
+		comboBoxDiadaSemana2.addItem("Segunda-feira");
+		comboBoxDiadaSemana2.addItem("Terça-feira");
+		comboBoxDiadaSemana2.addItem("Quarta-feira");
+		comboBoxDiadaSemana2.addItem("Quinta-feira");
+		comboBoxDiadaSemana2.addItem("Sexta-feira");
+		comboBoxDiadaSemana2.addItem("Sabado");
+		comboBoxDiadaSemana2.addItem("Domingo");
 		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Veiculo veiculo = new Veiculo();
-				veiculo.setFabricante(textFieldFabricante2.getText());
-				veiculo.setModelo(textFieldModelo2.getText());
-				veiculo.setPlaca(textFieldPlaca2.getText());
-				veiculo.setChassi(textFieldChassi2.getText());
-				veiculo.setCor(textFieldCor2.getText());
-				veiculo.setCombustivel(textFieldCombustivel2.getText());
+				PainelCriarProduto painelcriarproduto = new PainelCriarProduto();
+				painelcriarproduto.setVisible(true);
+				
+				Produtos produto = new Produtos();
+	
+				produto.setDescricao(textFieldDescricao2.getText());
+				produto.setQuantidade(Integer.parseInt(textFieldQuantidade2.getText()));
+				produto.setDiadasemana((String) comboBoxDiadaSemana2.getSelectedItem());
+				
+				
+				try {
+					produto.setValorvenda(Double.parseDouble(textFieldValorVenda2.getText()));
+				} catch (NumberFormatException e2) {
+					JOptionPane.showMessageDialog(null, "Favor inserir somente numeros (Campo Valor da Venda)");
+					e2.printStackTrace();
+				}
 				while(true) {
 					try {
-						veiculo.setValor(Integer.parseInt(textFieldValor2.getText()));
+						produto.setValorvenda(Double.parseDouble(textFieldValorVenda2.getText()));
 					} catch (NumberFormatException e2) {
-						JOptionPane.showMessageDialog(null, "Favor inserir somente numeros (Campo RG)");
+						JOptionPane.showMessageDialog(null, "Favor inserir somente numeros (Campo Valor da Venda)");
 						e2.printStackTrace();
 						break;
 					}
 					try {
-						Fachada.getInstance().alterarVeiculo(veiculo);
+						produto.setValorcompra(Double.parseDouble(textFieldValorCompra2.getText()));
+					} catch (NumberFormatException e2) {
+						JOptionPane.showMessageDialog(null, "Favor inserir somente numeros (Campo Valor da Compra)");
+						e2.printStackTrace();
+					}
+					while(true) {
+						try {
+							produto.setValorcompra(Double.parseDouble(textFieldValorCompra2.getText()));
+						} catch (NumberFormatException e2) {
+							JOptionPane.showMessageDialog(null, "Favor inserir somente numeros (Campo Valor da Compra)");
+							e2.printStackTrace();
+							break;
+						}
+					}
+					try {
+						Fachada.getInstance().cadastrarProduto(produto);
 					} catch (InserirException e1) {
-						JOptionPane.showMessageDialog(null, "Digite um Chassi válido");
+						JOptionPane.showMessageDialog(null, "A descrição está vazia");
 						e1.printStackTrace();
 						break;
+					} catch (ProdutoJaExisteException e2) {
+						JOptionPane.showMessageDialog(null, "Esse produto já existe");
+						e2.printStackTrace();
+						break;
 					}
-				JOptionPane.showMessageDialog(null, "Cliente Alterado com Sucesso!");
-				btnSalvar.setVisible(false);
+					
+				JOptionPane.showMessageDialog(null, "Produto Cadastrado com Sucesso!");
+				painelcriarproduto.setVisible(false);
 				break;
 				}
 				
@@ -145,130 +167,87 @@ public class PainelProcurarProduto extends JPanel {
 		});
 		btnSalvar.setBounds(240, 152, 89, 23);
 		add(btnSalvar);
-		btnSalvar.setVisible(false);
 		
-		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Veiculo veiculo = new Veiculo();
-				veiculo.setCodVeiculo((textFieldCodVeiculo2.getText()));
-				Fachada.getInstance().removerVeiculo((veiculo.getCodVeiculo()));
-				JOptionPane.showMessageDialog(null, "Cliente Excluido com Sucesso!");
-			}
-		});
-		btnExcluir.setBounds(349, 152, 89, 23);
-		add(btnExcluir);
+		
 		
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textFieldFabricante2.setEditable(true);
-				textFieldCombustivel2.setEditable(true);
-				textFieldModelo2.setEditable(true);
-				textFieldPlaca2.setEditable(true);
-				textFieldValor2.setEditable(true);
-				textFieldChassi2.setEditable(true);
+				
+				textFieldDescricao2.setEditable(true);
+				textFieldValorVenda2.setEditable(true);
+				textFieldValorCompra2.setEditable(true);
+				comboBoxDiadaSemana2.setEditable(true);
+				
+				
 				
 				btnAlterar.setVisible(false);
-				btnExcluir.setVisible(false);
 				btnSalvar.setVisible(true);
 			}
 		});
 		btnAlterar.setBounds(240, 152, 89, 23);
 		add(btnAlterar);
 		
-		JLabel lblEstoque = new JLabel("Estoque:");
-		lblEstoque.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblEstoque.setBounds(240, 38, 65, 18);
-		add(lblEstoque);
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PrimeiraTelaProduto telaproduto = new PrimeiraTelaProduto();
+				telaproduto.setVisible(true);
+				painelproduto.setVisible(false);
+			}
+		});
+		btnCancelar.setBounds(344, 152, 89, 23);
+		add(btnCancelar);
 		
-		textFieldEstoque2 = new JTextField();
-		textFieldEstoque2.setEditable(false);
-		textFieldEstoque2.setBounds(323, 39, 86, 18);
-		add(textFieldEstoque2);
-		textFieldEstoque2.setColumns(10);
 		
-		JLabel lblCor = new JLabel("Cor:");
-		lblCor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCor.setBounds(240, 65, 46, 14);
-		add(lblCor);
-		
-		textFieldCor2 = new JTextField();
-		textFieldCor2.setEditable(false);
-		textFieldCor2.setBounds(323, 65, 86, 16);
-		add(textFieldCor2);
-		textFieldCor2.setColumns(10);
 	}
 
-	public JTextField getTextFieldCodVeiculo2() {
-		return textFieldCodVeiculo2;
+	public JTextField getTextFieldCodigo2() {
+		return textFieldCodigo2;
 	}
 
-	public void setTextFieldCodVeiculo2(JTextField textFieldCodVeiculo2) {
-		this.textFieldCodVeiculo2 = textFieldCodVeiculo2;
+	public void setTextFieldCodigo2(JTextField textFieldCodigo2) {
+		this.textFieldCodigo2 = textFieldCodigo2;
 	}
 
-	public JTextField getTextFieldFabricante2() {
-		return textFieldFabricante2;
+	public JTextField getTextFieldDescricao2() {
+		return textFieldDescricao2;
 	}
 
-	public void setTextFieldFabricante2(JTextField textFieldFabricante2) {
-		this.textFieldFabricante2 = textFieldFabricante2;
+	public void setTextFieldDescricao2(JTextField textFieldDescricao2) {
+		this.textFieldDescricao2 = textFieldDescricao2;
 	}
 
-	public JTextField getTextFieldModelo2() {
-		return textFieldModelo2;
+	public JTextField getTextFieldValorVenda2() {
+		return textFieldValorVenda2;
 	}
 
-	public void setTextFieldModelo2(JTextField textFieldModelo2) {
-		this.textFieldModelo2 = textFieldModelo2;
+	public void setTextFieldValorVenda2(JTextField textFieldValorVenda2) {
+		this.textFieldValorVenda2 = textFieldValorVenda2;
 	}
 
-	public JTextField getTextFieldChassi2() {
-		return textFieldChassi2;
+	public JTextField getTextFieldValorCompra2() {
+		return textFieldValorCompra2;
 	}
 
-	public void setTextFieldChassi2(JTextField textFieldChassi2) {
-		this.textFieldChassi2 = textFieldChassi2;
+	public void setTextFieldValorCompra2(JTextField textFieldValorCompra2) {
+		this.textFieldValorCompra2 = textFieldValorCompra2;
 	}
 
-	public JTextField getTextFieldValor2() {
-		return textFieldValor2;
+	public JTextField getTextFieldQuantidade2() {
+		return textFieldQuantidade2;
 	}
 
-	public void setTextFieldValor2(JTextField textFieldValor2) {
-		this.textFieldValor2 = textFieldValor2;
+	public void setTextFieldQuantidade2(JTextField textFieldQuantidade2) {
+		this.textFieldQuantidade2 = textFieldQuantidade2;
 	}
 
-	public JTextField getTextFieldCombustivel2() {
-		return textFieldCombustivel2;
+	public JComboBox getComboBoxDiadaSemana2() {
+		return comboBoxDiadaSemana2;
 	}
 
-	public void setTextFieldCombustivel2(JTextField textFieldCombustivel2) {
-		this.textFieldCombustivel2 = textFieldCombustivel2;
+	public void setComboBoxDiadaSemana2(JComboBox comboBoxDiadaSemana2) {
+		this.comboBoxDiadaSemana2 = comboBoxDiadaSemana2;
 	}
 
-	public JTextField getTextFieldPlaca2() {
-		return textFieldPlaca2;
-	}
-
-	public void setTextFieldPlaca2(JTextField textFieldPlaca2) {
-		this.textFieldPlaca2 = textFieldPlaca2;
-	}
-
-	public JTextField getTextFieldEstoque2() {
-		return textFieldEstoque2;
-	}
-
-	public void setTextFieldEstoque2(JTextField textFieldEstoque2) {
-		this.textFieldEstoque2 = textFieldEstoque2;
-	}
-
-	public JTextField getTextFieldCor2() {
-		return textFieldCor2;
-	}
-
-	public void setTextFieldCor2(JTextField textFieldCor2) {
-		this.textFieldCor2 = textFieldCor2;
-	}
 }

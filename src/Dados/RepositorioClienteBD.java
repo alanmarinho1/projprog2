@@ -8,14 +8,14 @@ import Negocios.Cliente;
 import Negocios.Pessoa;
 
 
-public class RepositorioClienteBD implements RepositorioPessoa {
+public class RepositorioClienteBD implements RepositorioCliente {
 	
-	public void inserir(Pessoa pessoa) {
+	public void inserir(Cliente cliente) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		BD.getInstance().conectar();
 		try {
 			String query = "INSERT INTO cliente (nome, email, endereco, cpf, rg, nascimento) "
-					+ "VALUES ('" + pessoa.getNome() + "', '" + ((Cliente)pessoa).getEmail() + "', '" + pessoa.getEndereco() + "', '" + pessoa.getCpf() + "', '" + ((Cliente)pessoa).getRg() + "', '" + sdf.format(((Cliente) pessoa).getNascimento().getTime())+ "');"; 
+					+ "VALUES ('" + cliente.getNome() + "', '" + ((Cliente)cliente).getEmail() + "', '" + cliente.getEndereco() + "', '" + cliente.getCpf() + "', '" + ((Cliente)cliente).getRg() + "', '" + sdf.format(((Cliente) cliente).getNascimento().getTime())+ "');"; 
 			
 			BD.getInstance().getStatement().executeUpdate(query);	
 		} catch(Exception e) {
@@ -25,15 +25,25 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 		BD.getInstance().desconectar();
 	}
 	
-	public Pessoa procurar(String cpf) {
+	public Cliente procurar(String nome) {
 		BD.getInstance().conectar();
-		Pessoa resultado = new Cliente();
+		Cliente resultado = new Cliente();
 		ResultSet resultset;
 		try {
-			String query = "SELECT * FROM cliente WHERE cpf = '" + cpf + "';";
+			String query = "SELECT * FROM cliente WHERE nome like = '%''" + nome + "''%';";
 			resultset = BD.getInstance().getStatement().executeQuery(query);
 		
-			if(resultset != null && resultset.next()){
+			do {
+				resultado.setCodigo(resultset.getString("id_cliente"));
+    			resultado.setNome(resultset.getString("nome"));
+    			resultado.setEmail(resultset.getString("email"));
+    			resultado.setEndereco(resultset.getString("endereco"));
+    			resultado.setCpf(resultset.getString("cadastro_fisica_juridica"));
+    			resultado.setRg(Integer.parseInt(resultset.getString("rg")));
+    			resultado.setNascimento((Calendar)resultset.getObject("nascimento"));
+			}while(resultset != null && resultset.next());
+			
+			/*if(resultset != null && resultset.next()){
     			resultado.setCodigo(resultset.getString("id_cliente"));
     			resultado.setNome(resultset.getString("nome"));
     			((Cliente)resultado).setEmail(resultset.getString("email"));
@@ -41,7 +51,7 @@ public class RepositorioClienteBD implements RepositorioPessoa {
     			resultado.setCpf(resultset.getString("cadastro_fisica_juridica"));
     			((Cliente)resultado).setRg(Integer.parseInt(resultset.getString("rg")));
     			((Cliente)resultado).setNascimento((Calendar)resultset.getObject("nascimento"));
-            }
+            }*/
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("Erro: Não foi possivel pesquisar" + e.getMessage());
@@ -49,12 +59,12 @@ public class RepositorioClienteBD implements RepositorioPessoa {
 		return resultado;
 	}
 
-	public void alterar(Pessoa pessoa) {
+	public void alterar(Cliente cliente) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		BD.getInstance().conectar();
 		try {
-			String query = "UPDATE cliente SET nome = '" + pessoa.getNome() + "', email = '" + ((Cliente)pessoa).getEmail() + "', endereco = '" + pessoa.getEndereco() + "'"
-					+ ", cpf = '" + pessoa.getCpf() + "', rg = '" + ((Cliente)pessoa).getRg() + "', nascimento = '" + sdf.format(((Cliente) pessoa).getNascimento().getTime()) + "' WHERE cpf = '" + pessoa.getCpf() + "';"; 
+			String query = "UPDATE cliente SET nome = '" + cliente.getNome() + "', email = '" + cliente.getEmail() + "', endereco = '" + cliente.getEndereco() + "'"
+					+ ", cpf = '" + cliente.getCpf() + "', rg = '" + cliente.getRg() + "', nascimento = '" + sdf.format(cliente.getNascimento().getTime()) + "' WHERE cpf = '" + cliente.getCpf() + "';"; 
 			BD.getInstance().getStatement().executeUpdate(query);
 		} catch(Exception e) {
 			System.out.println("Erro: " + e.getMessage());

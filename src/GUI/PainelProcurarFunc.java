@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 
 import Negocios.Fachada;
 import Negocios.InserirException;
+import Negocios.PessoaJaExisteException;
 import Negocios.Funcionario;
 
 public class PainelProcurarFunc extends JPanel {
@@ -117,6 +118,10 @@ public class PainelProcurarFunc extends JPanel {
 						Fachada.getInstance().alterarFuncionario(funcionario);
 					} catch (InserirException e1) {
 						JOptionPane.showMessageDialog(null, "Digite um CPF válido");
+						e1.printStackTrace();
+						break;
+					} catch (PessoaJaExisteException e1) {
+						JOptionPane.showMessageDialog(null, "Já existe um funcionario com esse CPF");
 						e1.printStackTrace();
 						break;
 					}

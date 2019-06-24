@@ -9,18 +9,25 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
+
+import Negocios.Fachada;
+import Negocios.Funcionario;
+import Negocios.NaoLocalizadaPessoaException;
+import Negocios.NaoLocalizadoUsuarioException;
+
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import java.awt.CardLayout;
 
 public class Tela_Inicial extends JFrame {
-
-	
 	
 	private JPanel contentPane;
+
 
 	/**
 	 * Launch the application.
@@ -28,6 +35,7 @@ public class Tela_Inicial extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				
 				try {
 					Tela_Inicial frame = new Tela_Inicial();
 					frame.setVisible(true);
@@ -42,9 +50,11 @@ public class Tela_Inicial extends JFrame {
 	 * Create the frame.
 	 */
 	public Tela_Inicial() {
+
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 552, 327);
+		setBounds(100, 100, 552, 365);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -76,10 +86,10 @@ public class Tela_Inicial extends JFrame {
 		primeiratelacliente.setLayout(null);
 		primeiratelacliente.setVisible(false);
 		
-		PrimeiraTelaProposta primeiratelaproposta = new PrimeiraTelaProposta();
-		contentPane.add(primeiratelaproposta, "name_36913743812227");
-		primeiratelaproposta.setLayout(null);
-		primeiratelaproposta.setVisible(false);
+		PrimeiraTelaPedido primeiratelapedido = new PrimeiraTelaPedido();
+		contentPane.add(primeiratelapedido, "name_36913743812227");
+		primeiratelapedido.setLayout(null);
+		primeiratelapedido.setVisible(false);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -132,7 +142,7 @@ public class Tela_Inicial extends JFrame {
 		mnNegocios.setHorizontalAlignment(SwingConstants.TRAILING);
 		menuBar.add(mnNegocios);
 		
-		JMenuItem mntmPedido = new JMenuItem("Pedido");
+		JMenuItem mntmPedido = new JMenuItem("Realizar Pedido");
 		mntmPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				primeiratelacliente.setVisible(false);
@@ -140,21 +150,19 @@ public class Tela_Inicial extends JFrame {
 				primeiratelafunc.setVisible(false);
 				primeiratelaveiculo.setVisible(false);
 				boasvindas.setVisible(false);
-				primeiratelaproposta.setVisible(true);
+				primeiratelapedido.setVisible(true);
 			}
 		});
 		mnNegocios.add(mntmPedido);
 		
-		JMenuItem mntmCompra = new JMenuItem("Compra");
+		JMenuItem mntmCompra = new JMenuItem("Realizar Compra");
 		mnNegocios.add(mntmCompra);
 		
-		JMenuItem mntmSair = new JMenuItem("Sair");
-		mntmSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		menuBar.add(mntmSair);
+		JMenu mnRelatorio = new JMenu("Relatorio");
+		menuBar.add(mnRelatorio);
+		
+		JMenuItem mntmFinanceiro = new JMenuItem("Financeiro");
+		mnRelatorio.add(mntmFinanceiro);
 		
 		
 		

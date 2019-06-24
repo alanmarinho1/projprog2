@@ -1,13 +1,12 @@
 package Negocios;
 
 
-import Negocios.Pessoa;
 import Negocios.Pedido;
 
 public class Fachada {
 	
 	private ControleFuncionarios funcionarios;
-	private ControleCliente cliente;
+	private ControleCliente clientes;
 	private ControlePedido pedidos;
 	private ControleProduto produtos;
 	private ControleCompra compra;
@@ -17,7 +16,7 @@ public class Fachada {
 	public Fachada() {
 	
 	funcionarios = new ControleFuncionarios();
-	cliente = new ControleCliente();
+	clientes = new ControleCliente();
 	pedidos = new ControlePedido();
 	produtos = new ControleProduto();
 	compra = new ControleCompra();
@@ -31,16 +30,19 @@ public class Fachada {
 		}
 		return Fachada.instance;
 	}
-	public void cadastrarFuncionario(Pessoa pessoa) throws InserirException, PessoaJaExisteException {
-		funcionarios.cadastrar(pessoa);
+	public void cadastrarFuncionario(Funcionario funcionario) throws InserirException, PessoaJaExisteException {
+		funcionarios.cadastrar(funcionario);
 	}
 	
-	public void alterarFuncionario(Pessoa pessoa) throws InserirException{
-		funcionarios.alterar(pessoa);
+	public void alterarFuncionario(Funcionario funcionario) throws InserirException, PessoaJaExisteException{
+		funcionarios.alterar(funcionario);
     }
 	
-	public Pessoa procurarFuncionario(String cpf) throws NaoLocalizadaPessoaException {
+	public Funcionario procurarFuncionario(String cpf) throws NaoLocalizadaPessoaException {
 		return funcionarios.procurar(cpf);
+	}
+	public Funcionario procurarUsuario(String usuario, String senha) throws NaoLocalizadoUsuarioException {
+		return funcionarios.procurar(usuario, senha);
 	}
 	
 	public void removerFuncionario(String codigo) {
@@ -48,24 +50,24 @@ public class Fachada {
 	}
 	
 	
-	public void cadastrarCliente(Pessoa pessoa) throws InserirException, PessoaJaExisteException{
-		cliente.cadastrar(pessoa);
+	public void cadastrarCliente(Cliente cliente) throws InserirException, PessoaJaExisteException{
+		clientes.cadastrar(cliente);
 	}
 	
-	public void alterarCliente(Pessoa pessoa) throws InserirException, PessoaJaExisteException{
-		cliente.alterar(pessoa);
+	public void alterarCliente(Cliente cliente) throws InserirException, PessoaJaExisteException{
+		clientes.alterar(cliente);
     }
 	
-	public Pessoa procurarCliente(String cpf) throws NaoLocalizadaPessoaException{
-		 return cliente.procurar(cpf);
+	public Cliente procurarCliente(String cpf) throws NaoLocalizadaPessoaException{
+		 return clientes.procurar(cpf);
 	}
 	
 	public void removerCliente(String id) {
-		cliente.remover(id);
+		clientes.remover(id);
 	}
 	
 	public void listarCliente() {
-		cliente.listar();
+		clientes.listar();
 	}
 	
 	public void cadastrarPedido(Pedido pedido) throws PedidoException{
@@ -92,8 +94,8 @@ public class Fachada {
 		produtos.alterar(produto);
 	}
 	
-	public void procurarProduto(String codigo) throws NaoLocalizadoProdutoException {
-		produtos.procurar(codigo);
+	public Produtos procurarProduto(String codigo) throws NaoLocalizadoProdutoException {
+		return produtos.procurar(codigo);
 	}
 	
 	public void listarProduto() {

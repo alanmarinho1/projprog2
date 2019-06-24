@@ -3,6 +3,7 @@ package Dados;
 import java.sql.ResultSet;
 import java.util.Calendar;
 
+import Negocios.Funcionario;
 import Negocios.Pedido;
 import Negocios.Produtos;
 
@@ -25,6 +26,21 @@ public class RepositorioPedidoBD implements RepositorioPedido {
 		
 	}
 
+	public void alterar (Pedido pedido) {
+		BD.getInstance().conectar();
+		try {
+			String query = "UPDATE pedido SET id_funcionario = '" + pedido.getFuncionario().getCodigo() 
+			+ "', id_cliente = '" + pedido.getCliente().getCodigo()
+			+ "', data_pedido = '" + pedido.getData()
+			+ "', quantidade_itens = '" + pedido.getNumeroitens()
+			+ "', valor = '" + pedido.getTotal()
+			+ "' WHERE id_pedido = '" + pedido.getCodigo() + "';"; 
+			BD.getInstance().getStatement().executeUpdate(query);
+		} catch(Exception e) {
+			System.out.println("Erro: Não foi possivel alterar " + e.getMessage());
+		}
+		BD.getInstance().desconectar();
+	}
 	
 	public Pedido procurar(String codigo) {
 		

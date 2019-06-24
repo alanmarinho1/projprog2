@@ -12,8 +12,8 @@ public class RepositorioProdutosBD implements RepositorioProdutos {
 		
 		BD.getInstance().conectar();
 		try {
-			String query = "INSERT INTO produto (id_produto, descricao, quantidade, valorvenda, valorcompra, diadasemana) "
-					+ "VALUES ('" + produto.getCodigo() + "', '" + produto.getDescricao() + "', '" + produto.getQuantidade() + "', '" + produto.getValorvenda() + "', '" + produto.getDiadasemana().getTime() + "');"; 
+			String query = "INSERT INTO produto (descricao, quantidade, valorvenda, valorcompra, diadasemana) "
+					+ "VALUES ('" + produto.getCodigo() + "', '" + produto.getDescricao() + "', '" + produto.getQuantidade() + "', '" + produto.getValorvenda() + "', '" + produto.getDiadasemana() + "');"; 
 			
 			BD.getInstance().getStatement().executeUpdate(query);	
 		} catch(Exception e) {
@@ -54,7 +54,7 @@ public class RepositorioProdutosBD implements RepositorioProdutos {
     			resultado.setValorvenda(resultset.getDouble("valorvenda"));
     			resultado.setValorcompra(resultset.getDouble("valorcompra"));
     			//tem que ver se ele ta comparando se é o mesmo dia da semana
-    			resultado.setDiadasemana((Calendar) resultset.getObject("diadasemana"));
+    			resultado.setDiadasemana((String) resultset.getObject("diadasemana"));
             }
 		} catch(Exception e) {
 			e.printStackTrace();
