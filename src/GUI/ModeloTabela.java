@@ -37,8 +37,8 @@ public class ModeloTabela extends AbstractTableModel{
 	public ArrayList getLinhas() {
 		return linhas;
 	}
-	public void setLinhas(ArrayList linhas) {
-		this.linhas = linhas;
+	public void setLinhas(ArrayList dados) {
+		this.linhas = dados;
 	}
 	public String[] getColunas() {
 		return colunas;

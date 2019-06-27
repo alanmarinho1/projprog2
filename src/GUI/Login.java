@@ -17,15 +17,31 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class Login extends JDialog {
 
+	private static Login instance = null;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textFieldUsuario;
-	private JTextField textFieldSenha;
 	private JButton btnOk;
 	private JButton btnCancelar;
+	private JPasswordField passwordField;
 
+	public JPasswordField getPasswordField() {
+		return passwordField;
+	}
+
+	public void setPasswordField(JPasswordField passwordField) {
+		this.passwordField = passwordField;
+	}
+
+	public static Login getInstance() {
+		if (Login.instance == null) {
+			Login.instance = new Login();
+		}
+		return Login.instance;
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -63,10 +79,9 @@ public class Login extends JDialog {
 		contentPanel.add(textFieldUsuario);
 		textFieldUsuario.setColumns(10);
 		
-		textFieldSenha = new JTextField();
-		textFieldSenha.setColumns(10);
-		textFieldSenha.setBounds(66, 42, 86, 20);
-		contentPanel.add(textFieldSenha);
+		passwordField = new JPasswordField();
+		passwordField.setBounds(66, 42, 88, 17);
+		contentPanel.add(passwordField);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -74,11 +89,15 @@ public class Login extends JDialog {
 			
 			btnOk = new JButton("Ok");
 			btnOk.addActionListener(new ActionListener() {
+				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent arg0) {
 					Funcionario achouFuncionario = null;
 					
 						try {
-							achouFuncionario = Fachada.getInstance().procurarUsuario(textFieldUsuario.getText(), textFieldSenha.getText());
+							achouFuncionario = Fachada.getInstance().procurarUsuario(textFieldUsuario.getText(), passwordField.getText());
+							Login.getInstance().getTextFieldUsuario().setText(textFieldUsuario.getText());
+							Login.getInstance().getPasswordField().setText(passwordField.getText());
+							
 						} catch (NaoLocalizadoUsuarioException e) {
 							JOptionPane.showMessageDialog(null, "Usuario e/ou Senha estão incorretos");
 							e.printStackTrace();
@@ -107,14 +126,6 @@ public class Login extends JDialog {
 		this.textFieldUsuario = textFieldUsuario;
 	}
 
-	public JTextField getTextFieldSenha() {
-		return textFieldSenha;
-	}
-
-	public void setTextFieldSenha(JTextField textFieldSenha) {
-		this.textFieldSenha = textFieldSenha;
-	}
-
 	public JButton getBtnOk() {
 		return btnOk;
 	}
@@ -130,5 +141,4 @@ public class Login extends JDialog {
 	public void setBtnCancelar(JButton btnCancelar) {
 		this.btnCancelar = btnCancelar;
 	}
-	
 }

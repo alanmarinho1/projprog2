@@ -2,6 +2,7 @@ package Negocios;
 
 public class ItensPedido {
 	
+	private String codigo;
 	private Produtos produto;
 	private Pedido pedido;
 	private int quantidadeitens;
@@ -33,6 +34,12 @@ public class ItensPedido {
 	}
 	public void setValortotalitem(double valortotalitem) {
 		this.valortotalitem = valortotalitem;
+	}
+	public String getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 	
 	

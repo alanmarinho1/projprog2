@@ -8,44 +8,40 @@ public class ControlePedido {
 	
 	RepositorioPedido pedidos = new RepositorioPedidoBD();
     
-	public void cadastrar(Pedido pedido) throws PedidoException {
+	public void cadastrar(Pedido pedido) {
 		
-	/*	if(pedido.getFuncionario() == null) {
-			PedidoException e1;
-			e1 = new PedidoException(pedido.getFuncionario());
-			throw e1;
-		}
-		
-        if (pedido.getCliente() == null){
-        	PedidoException e2;
-        	e2 = new PedidoException(pedido.getCliente());
-			throw e2;
-        }
-        if (pedido.getProduto() == null){
-        	PedidoException e3;
-        	e3 = new PedidoException(pedido.getProduto());
-			throw e3;
-        }*/
+	
 		pedidos.inserir(pedido);
 	}
      
      
 	public Pedido procurar(String codPedido) throws NaoLocalizadoPedidoException{
-	/*	if (pedidos.procurar(codPedido).getCodigo() == null) {
-			throw new NaoLocalizadoPedidoException(codPedido);
-		}else {*/
+	
 			
 		return pedidos.procurar(codPedido);
-		}
-//	}
+	}
 	
-	public void remover(String codPedido) throws NaoLocalizadoPedidoException {
-	/*	if (pedidos.procurar(codPedido).getCodigo() == null) {
-			throw new NaoLocalizadoPedidoException(codPedido);
-		}else {*/
-		pedidos.remover(codPedido);
+	public Pedido procurar2(){
+		
+		
+		return pedidos.procurar2();
+	}
+	
+	public void alterar(Pedido pedido) {
+		
+		pedidos.alterar(pedido);
+	}
+	
+	public void alterar2(Pedido pedido) {
+		
+		pedidos.alterar2(pedido);
+	}
+
+	
+	public void remover() {
+	
+		pedidos.remover();
 		}
-	//}
 	
 	public void listar() {
 		pedidos.listar();

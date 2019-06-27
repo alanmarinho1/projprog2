@@ -1,6 +1,8 @@
 package Negocios;
 
 
+import java.util.ArrayList;
+
 import Dados.RepositorioFuncionario;
 import Dados.RepositorioFuncionarioBD;
 
@@ -57,6 +59,15 @@ public class ControleFuncionarios {
 	
 		}
 	}
+	
+	public ArrayList<Funcionario> listarFuncionarios(String usuario) throws NaoLocalizadaPessoaException{
+		 
+		if (funcionarios.listarFuncionarios(usuario) == null) {
+			throw new NaoLocalizadaPessoaException(usuario);
+		}
+	
+	return funcionarios.listarFuncionarios(usuario);
+}
 	
 	public void remover(String codigo) {
 		

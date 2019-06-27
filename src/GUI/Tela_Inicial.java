@@ -19,6 +19,7 @@ import Negocios.Fachada;
 import Negocios.Funcionario;
 import Negocios.NaoLocalizadaPessoaException;
 import Negocios.NaoLocalizadoUsuarioException;
+import Negocios.Pedido;
 
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -26,9 +27,10 @@ import java.awt.CardLayout;
 
 public class Tela_Inicial extends JFrame {
 	
+	private static Tela_Inicial instance = null;
 	private JPanel contentPane;
 
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -54,7 +56,7 @@ public class Tela_Inicial extends JFrame {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 552, 365);
+		setBounds(100, 100, 676, 482);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -65,11 +67,6 @@ public class Tela_Inicial extends JFrame {
 		contentPane.add(boasvindas, "name_36913695526262");
 		boasvindas.setLayout(null);
 		boasvindas.setVisible(false);
-		
-		PrimeiraTelaCliente primeiratelapj = new PrimeiraTelaCliente();
-		contentPane.add(primeiratelapj, "name_36913695526266");
-		primeiratelapj.setLayout(null);
-		primeiratelapj.setVisible(false);
 		
 		PrimeiraTelaFunc primeiratelafunc = new PrimeiraTelaFunc();
 		contentPane.add(primeiratelafunc, "name_36913712635038");
@@ -85,12 +82,7 @@ public class Tela_Inicial extends JFrame {
 		contentPane.add(primeiratelacliente, "name_36913743812207");
 		primeiratelacliente.setLayout(null);
 		primeiratelacliente.setVisible(false);
-		
-		PrimeiraTelaPedido primeiratelapedido = new PrimeiraTelaPedido();
-		contentPane.add(primeiratelapedido, "name_36913743812227");
-		primeiratelapedido.setLayout(null);
-		primeiratelapedido.setVisible(false);
-		
+			
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
@@ -105,7 +97,6 @@ public class Tela_Inicial extends JFrame {
 		mntmCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				primeiratelacliente.setVisible(true);
-				primeiratelapj.setVisible(false);
 				primeiratelafunc.setVisible(false);
 				primeiratelaveiculo.setVisible(false);
 				boasvindas.setVisible(false);
@@ -117,9 +108,9 @@ public class Tela_Inicial extends JFrame {
 		JMenuItem mntmFuncionario = new JMenuItem("Funcionario");
 		mntmFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				primeiratelapj.setVisible(true);
+				
 				primeiratelacliente.setVisible(false);
-				primeiratelafunc.setVisible(false);
+				primeiratelafunc.setVisible(true);
 				primeiratelaveiculo.setVisible(false);
 				boasvindas.setVisible(false);
 			}
@@ -131,7 +122,6 @@ public class Tela_Inicial extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				primeiratelaveiculo.setVisible(true);
 				primeiratelafunc.setVisible(false);
-				primeiratelapj.setVisible(false);
 				primeiratelacliente.setVisible(false);
 				boasvindas.setVisible(false);
 			}
@@ -145,12 +135,25 @@ public class Tela_Inicial extends JFrame {
 		JMenuItem mntmPedido = new JMenuItem("Realizar Pedido");
 		mntmPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				FrameCriarPedido criarpedido = new FrameCriarPedido();
+				Funcionario funcionario = null;
+				try {
+					funcionario = Fachada.getInstance().procurarUsuario(Login.getInstance().getTextFieldUsuario().getText(), Login.getInstance().getPasswordField().getText());
+				} catch (NaoLocalizadoUsuarioException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				Pedido pedido = new Pedido();
+				pedido.setFuncionario(funcionario);
+				System.out.println(pedido.getFuncionario().getCodigo());
+				Fachada.getInstance().cadastrarPedido(pedido);
+				criarpedido.setVisible(true);
 				primeiratelacliente.setVisible(false);
-				primeiratelapj.setVisible(false);
 				primeiratelafunc.setVisible(false);
-				primeiratelaveiculo.setVisible(false);
 				boasvindas.setVisible(false);
-				primeiratelapedido.setVisible(true);
+				
 			}
 		});
 		mnNegocios.add(mntmPedido);
@@ -158,11 +161,32 @@ public class Tela_Inicial extends JFrame {
 		JMenuItem mntmCompra = new JMenuItem("Realizar Compra");
 		mnNegocios.add(mntmCompra);
 		
-		JMenu mnRelatorio = new JMenu("Relatorio");
+		JMenu mnFinanceiro = new JMenu("Financeiro");
+		menuBar.add(mnFinanceiro);
+		
+		JMenuItem mntmCaixa = new JMenuItem("Caixa");
+		mnFinanceiro.add(mntmCaixa);
+		
+		JMenuItem mntmRealizarPagamento = new JMenuItem("Realizar Pagamento");
+		mnFinanceiro.add(mntmRealizarPagamento);
+		
+		JMenu mnRelatorio = new JMenu("Relatorios");
 		menuBar.add(mnRelatorio);
 		
 		JMenuItem mntmFinanceiro = new JMenuItem("Financeiro");
 		mnRelatorio.add(mntmFinanceiro);
+		
+		JMenuItem mntmHistoricoPedidos = new JMenuItem("Historico Pedidos");
+		mnRelatorio.add(mntmHistoricoPedidos);
+		
+		JMenuItem mntmSair = new JMenuItem("Sair");
+		mntmSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				System.exit(0);
+			}
+		});
+		menuBar.add(mntmSair);
 		
 		
 		

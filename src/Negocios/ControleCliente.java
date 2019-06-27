@@ -2,6 +2,9 @@ package Negocios;
 
 
 import Dados.RepositorioClienteBD;
+
+import java.util.ArrayList;
+
 import Dados.RepositorioCliente;
 
 
@@ -43,7 +46,7 @@ public class ControleCliente {
 			throw e1;
         }
 		
-		if (Cliente.procurar(cliente.getCpf()).getCodigo() == cliente.getCpf()) {
+		if (Cliente.procurar(cliente.getCpf()).getCodigo() == cliente.getCpf() || Cliente.procurar(cliente.getNome()).getCodigo() == cliente.getNome()) {
 			PessoaJaExisteException e2;
 			e2 = new PessoaJaExisteException(cliente.getCpf());
 			throw e2;
@@ -52,13 +55,22 @@ public class ControleCliente {
 		 		Cliente.alterar(cliente);
         }
     
-	public Cliente procurar(String cpf) throws NaoLocalizadaPessoaException{
-		if (Cliente.procurar(cpf).getCodigo() == null) {
-			throw new NaoLocalizadaPessoaException(cpf);
+	public Cliente procurar(String dado) throws NaoLocalizadaPessoaException{
+		if (Cliente.procurar(dado).getCodigo() == null) {
+			throw new NaoLocalizadaPessoaException(dado);
 		}else {
 			
-		return Cliente.procurar(cpf);
+		return Cliente.procurar(dado);
 		}
+	}
+	
+	public ArrayList<Cliente> listarClientes(String nome) throws NaoLocalizadaPessoaException{
+		 
+			if (Cliente.listarClientes(nome) == null) {
+				throw new NaoLocalizadaPessoaException(nome);
+			}
+		
+		return Cliente.listarClientes(nome);
 	}
 	
 	public void remover(String id) {

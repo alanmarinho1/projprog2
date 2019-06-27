@@ -8,7 +8,6 @@ public class Pedido {
 	private String codigo;
 	private Funcionario funcionario;
 	private Cliente cliente;
-	private Produtos produto;
 	private int numeroitens;
 	private Calendar data = Calendar.getInstance();
 	private double total;
@@ -28,13 +27,7 @@ public class Pedido {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public Produtos getProduto() {
-		return produto;
-	}
-	public void setProduto(Produtos produto) {
-		this.produto = produto;
-	}
-	
+		
 	public double getTotal() {
 		return total;
 	}
@@ -80,7 +73,7 @@ public class Pedido {
 	public double promoAniv (Cliente cliente, Produtos produto) {
 		Calendar data = Calendar.getInstance();
 		
-		return produto.getValorcompra() * 0.5;
+		return produto.getValorvenda() * 0.5;
 	}
 
 	public void PedidoRealizado() {

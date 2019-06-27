@@ -5,7 +5,7 @@ public class InserirException extends Exception{
 	private String identificador;
 	
 	public InserirException (String identificador) {
-		super("Dados Invalidos");
+		super("Não foi possivel inserir");
 		this.identificador = identificador;
 	}
 	

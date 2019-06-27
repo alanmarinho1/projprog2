@@ -1,8 +1,11 @@
 package Dados;
 
 import java.sql.ResultSet;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import Negocios.Cliente;
 import Negocios.Pessoa;
@@ -14,8 +17,10 @@ public class RepositorioClienteBD implements RepositorioCliente {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		BD.getInstance().conectar();
 		try {
-			String query = "INSERT INTO cliente (nome, email, endereco, cpf, rg, nascimento) "
-					+ "VALUES ('" + cliente.getNome() + "', '" + ((Cliente)cliente).getEmail() + "', '" + cliente.getEndereco() + "', '" + cliente.getCpf() + "', '" + ((Cliente)cliente).getRg() + "', '" + sdf.format(((Cliente) cliente).getNascimento().getTime())+ "');"; 
+			String query = "INSERT INTO cliente (nome, email, endereco, cpf, rg, nascimento, telefone) "
+					+ "VALUES ('" + cliente.getNome() + "', '" + cliente.getEmail() + "', '" + cliente.getEndereco() + "', '" +
+					cliente.getCpf() + "', '" + ((Cliente)cliente).getRg() + "', '" +
+					sdf.format(cliente.getNascimento().getTime())+ "', '"+ cliente.getTelefone() +"');"; 
 			
 			BD.getInstance().getStatement().executeUpdate(query);	
 		} catch(Exception e) {
@@ -25,46 +30,71 @@ public class RepositorioClienteBD implements RepositorioCliente {
 		BD.getInstance().desconectar();
 	}
 	
-	public Cliente procurar(String nome) {
+	public Cliente procurar(String dado) {
 		BD.getInstance().conectar();
 		Cliente resultado = new Cliente();
 		ResultSet resultset;
+		DateFormat f = DateFormat.getDateInstance();
+		
 		try {
-			String query = "SELECT * FROM cliente WHERE nome like = '%''" + nome + "''%';";
+			String query = "SELECT * FROM cliente WHERE id_cliente = '" + dado + "';";
 			resultset = BD.getInstance().getStatement().executeQuery(query);
 		
-			do {
-				resultado.setCodigo(resultset.getString("id_cliente"));
+			if(resultset != null && resultset.next()){
+    			resultado.setCodigo(resultset.getString("id_cliente"));
     			resultado.setNome(resultset.getString("nome"));
     			resultado.setEmail(resultset.getString("email"));
     			resultado.setEndereco(resultset.getString("endereco"));
     			resultado.setCpf(resultset.getString("cadastro_fisica_juridica"));
     			resultado.setRg(Integer.parseInt(resultset.getString("rg")));
-    			resultado.setNascimento((Calendar)resultset.getObject("nascimento"));
-			}while(resultset != null && resultset.next());
-			
-			/*if(resultset != null && resultset.next()){
-    			resultado.setCodigo(resultset.getString("id_cliente"));
-    			resultado.setNome(resultset.getString("nome"));
-    			((Cliente)resultado).setEmail(resultset.getString("email"));
-    			resultado.setEndereco(resultset.getString("endereco"));
-    			resultado.setCpf(resultset.getString("cadastro_fisica_juridica"));
-    			((Cliente)resultado).setRg(Integer.parseInt(resultset.getString("rg")));
-    			((Cliente)resultado).setNascimento((Calendar)resultset.getObject("nascimento"));
-            }*/
+    			resultado.getNascimento().setTime((f.parse(resultset.getString("nascimento"))));
+            }
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("Erro: Não foi possivel pesquisar" + e.getMessage());
 			}
 		return resultado;
 	}
+	
+	public ArrayList<Cliente> listarClientes(String nome) {
+		BD.getInstance().conectar();
+		ArrayList<Cliente> resultadolista = new ArrayList<Cliente>();
+		DateFormat f = DateFormat.getDateInstance();
+		ResultSet resultset;
+		try {
+			String query = "SELECT * FROM cliente WHERE nome like '" + nome + "%';";
+			resultset = BD.getInstance().getStatement().executeQuery(query);
+			
+			while(resultset != null && resultset.next()){
+				Cliente resultado = new Cliente();
+				resultado.setCodigo(resultset.getString("id_cliente"));
+    			resultado.setNome(resultset.getString("nome"));
+    			resultado.setEmail(resultset.getString("email"));
+    			resultado.setEndereco(resultset.getString("endereco"));
+    			resultado.setCpf(resultset.getString("cpf"));
+    			resultado.setRg(Integer.parseInt(resultset.getString("rg")));
+    			resultado.getNascimento().setTime((f.parse(resultset.getString("nascimento"))));
+    			resultado.setTelefone(resultset.getString("telefone"));
+    			
+    			resultadolista.add(resultado);
+    			
+    		
+			}
+					
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Erro: Não foi possivel pesquisar" + e.getMessage());
+			}
+		return resultadolista;
+	}
 
 	public void alterar(Cliente cliente) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		BD.getInstance().conectar();
 		try {
-			String query = "UPDATE cliente SET nome = '" + cliente.getNome() + "', email = '" + cliente.getEmail() + "', endereco = '" + cliente.getEndereco() + "'"
-					+ ", cpf = '" + cliente.getCpf() + "', rg = '" + cliente.getRg() + "', nascimento = '" + sdf.format(cliente.getNascimento().getTime()) + "' WHERE cpf = '" + cliente.getCpf() + "';"; 
+			String query = "UPDATE cliente SET nome = '" + cliente.getNome() + "', email = '" + cliente.getEmail() + 
+					"', endereco = '" + cliente.getEndereco() + "', cpf = '" + cliente.getCpf() + "', rg = '" + cliente.getRg() +
+					"', nascimento = '" + sdf.format(cliente.getNascimento().getTime()) + "', telefone = '"+ cliente.getTelefone() +"' WHERE id_cliente = '" + cliente.getCodigo() + "';"; 
 			BD.getInstance().getStatement().executeUpdate(query);
 		} catch(Exception e) {
 			System.out.println("Erro: " + e.getMessage());

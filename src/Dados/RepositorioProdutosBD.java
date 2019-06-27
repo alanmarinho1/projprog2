@@ -1,7 +1,9 @@
 package Dados;
 
 import java.sql.ResultSet;
-import java.util.Calendar;
+import java.text.DateFormat;
+import java.util.ArrayList;
+
 import Negocios.Produtos;
 
 
@@ -13,7 +15,7 @@ public class RepositorioProdutosBD implements RepositorioProdutos {
 		BD.getInstance().conectar();
 		try {
 			String query = "INSERT INTO produto (descricao, quantidade, valorvenda, valorcompra, diadasemana) "
-					+ "VALUES ('" + produto.getCodigo() + "', '" + produto.getDescricao() + "', '" + produto.getQuantidade() + "', '" + produto.getValorvenda() + "', '" + produto.getDiadasemana() + "');"; 
+					+ "VALUES ('" + produto.getDescricao() + "', '" + produto.getQuantidade() + "', '" + produto.getValorvenda() + "', '" + produto.getDiadasemana() + "');"; 
 			
 			BD.getInstance().getStatement().executeUpdate(query);	
 		} catch(Exception e) {
@@ -28,8 +30,9 @@ public class RepositorioProdutosBD implements RepositorioProdutos {
 		
 		BD.getInstance().conectar();
 		try {
-			String query = "UPDATE produto SET descricao = '" + produto.getDescricao() + "', quantidade = '" + produto.getQuantidade() + "'"
-					+ ", valorvenda= '" + produto.getValorvenda() + "', valorcompra = '" + produto.getValorcompra() + "' WHERE id_produto = '" + produto.getCodigo() + "';"; 
+			String query = "UPDATE produto SET descricao = '" + produto.getDescricao() + "', quantidade = '" + produto.getQuantidade() + 
+					"', valorvenda= '" + produto.getValorvenda() + "', valorcompra = '" + produto.getValorcompra() + 
+					"', diadasemana ='"+ produto.getDiadasemana() +"' WHERE id_produto = '" + produto.getCodigo() + "';"; 
 			BD.getInstance().getStatement().executeUpdate(query);
 		} catch(Exception e) {
 			System.out.println("Erro: " + e.getMessage());
@@ -62,11 +65,37 @@ public class RepositorioProdutosBD implements RepositorioProdutos {
 			}
 		return resultado;
 	}
-
-	@Override
-	public void listar() {
-		// TODO Auto-generated method stub
+	
+	
+	
+	public ArrayList<Produtos> listarProdutos(String descricao) {
 		
+		BD.getInstance().conectar();
+		ArrayList<Produtos> resultadolista = new ArrayList<Produtos>();
+		
+		ResultSet resultset;
+		
+		try {
+			String query = "SELECT * FROM produto WHERE descricao like '" + descricao + "%';";
+			resultset = BD.getInstance().getStatement().executeQuery(query);
+		
+			while(resultset != null && resultset.next()){
+				Produtos resultado = new Produtos();
+    			resultado.setCodigo(resultset.getString("id_produto"));
+    			resultado.setDescricao(resultset.getString("descricao"));
+    			resultado.setQuantidade(resultset.getInt("quantidade"));
+    			resultado.setValorvenda(resultset.getDouble("valorvenda"));
+    			resultado.setValorcompra(resultset.getDouble("valorcompra"));
+    			resultado.setDiadasemana((String) resultset.getObject("diadasemana"));
+    			
+    			resultadolista.add(resultado);
+            }
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Erro: Não foi possivel pesquisar" + e.getMessage());
+			}
+		
+		return resultadolista;
 	}
 
 	
