@@ -35,7 +35,7 @@ public class RepositorioPedidoBD implements RepositorioPedido {
 			String query = "UPDATE pedido SET id_funcionario = '" + pedido.getFuncionario().getCodigo() 
 			+ "', id_cliente = '" + pedido.getCliente().getCodigo()
 			+ "', data_pedido = '" + sdf.format(pedido.getData().getTime())
-			+ "', quantidade_itens = '" + pedido.getNumeroitens()
+			+ "', numeroitens = '" + pedido.getNumeroitens()
 			+ "', valor = '" + pedido.getTotal()
 			+ "' WHERE id_pedido = '" + pedido.getCodigo() + "';"; 
 			BD.getInstance().getStatement().executeUpdate(query);
@@ -76,7 +76,7 @@ public class RepositorioPedidoBD implements RepositorioPedido {
 		try {
 			String query = "UPDATE pedido SET id_cliente = '" + pedido.getCliente().getCodigo()
 			+ "', data_pedido = '" + sdf.format(pedido.getData().getTime())
-			+ "', quantidade_itens = '" + pedido.getNumeroitens()
+			+ "', numeroitens = '" + pedido.getNumeroitens()
 			+ "', valor = '" + pedido.getTotal() + "' ORDER BY id_pedido DESC LIMIT 1;"; 
 			BD.getInstance().getStatement().executeUpdate(query);
 		} catch(Exception e) {

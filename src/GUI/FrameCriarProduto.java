@@ -115,6 +115,7 @@ public class FrameCriarProduto extends JFrame {
 		getContentPane().add(lblPromooDoDia);
 		
 		JComboBox comboBoxDiadaSemana = new JComboBox();
+		comboBoxDiadaSemana.setEditable(true);
 		comboBoxDiadaSemana.setBounds(134, 134, 114, 20);
 		getContentPane().add(comboBoxDiadaSemana);
 		comboBoxDiadaSemana.addItem("Segunda-feira");
@@ -133,15 +134,15 @@ public class FrameCriarProduto extends JFrame {
 				
 				produto.setDescricao(textFieldDescricao.getText());
 				produto.setQuantidade(0);
-				produto.setDiadasemana((String) comboBoxDiadaSemana.getSelectedItem());
+				produto.setDiadasemana(String.valueOf((String) comboBoxDiadaSemana.getSelectedItem()));
 				
 				
-				try {
-					produto.setValorvenda(Double.parseDouble(textFieldValorVenda.getText()));
-				} catch (NumberFormatException e2) {
-					JOptionPane.showMessageDialog(null, "Favor inserir somente numeros (Campo Valor da Venda)");
-					e2.printStackTrace();
-				}
+//				try {
+//					produto.setValorvenda(Double.parseDouble(textFieldValorVenda.getText()));
+//				} catch (NumberFormatException e2) {
+//					JOptionPane.showMessageDialog(null, "Favor inserir somente numeros (Campo Valor da Venda)");
+//					e2.printStackTrace();
+//				}
 				while(true) {
 					try {
 						produto.setValorvenda(Double.parseDouble(textFieldValorVenda.getText()));
@@ -156,15 +157,15 @@ public class FrameCriarProduto extends JFrame {
 						JOptionPane.showMessageDialog(null, "Favor inserir somente numeros (Campo Valor da Compra)");
 						e2.printStackTrace();
 					}
-					while(true) {
-						try {
-							produto.setValorcompra(Double.parseDouble(textFieldValorCompra.getText()));
-						} catch (NumberFormatException e2) {
-							JOptionPane.showMessageDialog(null, "Favor inserir somente numeros (Campo Valor da Compra)");
-							e2.printStackTrace();
-							break;
-						}
-					}
+//					while(true) {
+//						try {
+//							produto.setValorcompra(Double.parseDouble(textFieldValorCompra.getText()));
+//						} catch (NumberFormatException e2) {
+//							JOptionPane.showMessageDialog(null, "Favor inserir somente numeros (Campo Valor da Compra)");
+//							e2.printStackTrace();
+//							break;
+//						}
+//					}
 					try {
 						Fachada.getInstance().cadastrarProduto(produto);
 					} catch (InserirException e1) {
@@ -180,6 +181,7 @@ public class FrameCriarProduto extends JFrame {
 				JOptionPane.showMessageDialog(null, "Produto Cadastrado com Sucesso!");
 				PrimeiraTelaProduto telaproduto = new PrimeiraTelaProduto();
 				telaproduto.setVisible(true);
+				dispose();
 				break;
 				}
 			}

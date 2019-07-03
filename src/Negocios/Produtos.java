@@ -9,7 +9,7 @@ public class Produtos {
 	private int quantidade;
 	private double valorvenda;
 	private double valorcompra;
-	private boolean disponibilidade; //se quantidade for maior que 0, o valor é true
+	private boolean disponibilidade; 
 	private String diadasemana ; //cadastrar um dia da semana pra cada produto, pois na hora de cadastrar perguntar
 	//qual o dia da semana o preço vai ser menor
 	

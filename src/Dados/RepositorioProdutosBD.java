@@ -14,8 +14,8 @@ public class RepositorioProdutosBD implements RepositorioProdutos {
 		
 		BD.getInstance().conectar();
 		try {
-			String query = "INSERT INTO produto (descricao, quantidade, valorvenda, valorcompra, diadasemana) "
-					+ "VALUES ('" + produto.getDescricao() + "', '" + produto.getQuantidade() + "', '" + produto.getValorvenda() + "', '" + produto.getDiadasemana() + "');"; 
+			String query = "INSERT INTO produto (descricao, quantidade, valorvenda, valorcompra, diadasemana) VALUES ('" + produto.getDescricao() + "', '" + produto.getQuantidade()
+			+ "', '" + produto.getValorvenda() + "', '"+ produto.getValorcompra() +"', '" + produto.getDiadasemana() + "');"; 
 			
 			BD.getInstance().getStatement().executeUpdate(query);	
 		} catch(Exception e) {

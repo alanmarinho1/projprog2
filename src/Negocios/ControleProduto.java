@@ -17,7 +17,7 @@ public class ControleProduto {
 			e1 = new InserirException(produto.getDescricao());
 			throw e1;
         }
-		if (produtos.procurar(produto.getDescricao()).getCodigo().equals(produto.getDescricao())){
+		if (produtos.procurar(produto.getDescricao()).getCodigo() == produto.getDescricao()){
 			ProdutoJaExisteException e2;
 			e2 = new ProdutoJaExisteException(produto.getDescricao());
 			throw e2;

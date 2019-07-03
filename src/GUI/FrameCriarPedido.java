@@ -9,11 +9,13 @@ import javax.swing.border.EmptyBorder;
 
 import Negocios.Cliente;
 import Negocios.Fachada;
+import Negocios.Funcionario;
 import Negocios.InserirException;
 import Negocios.ItensPedido;
 import Negocios.ItensPedidoQtdException;
 import Negocios.NaoLocalizadaPessoaException;
 import Negocios.NaoLocalizadoProdutoException;
+import Negocios.NaoLocalizadoUsuarioException;
 import Negocios.Pedido;
 import Negocios.Produtos;
 
@@ -25,10 +27,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JTable;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 
@@ -37,16 +41,20 @@ public class FrameCriarPedido extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldCliente;
 	private JTable tableClientes;
-	private JTextField textField_1;
+	private JTextField textFieldProduto;
+	private ArrayList<Produtos> achouProdutos = null;
 	ArrayList<Cliente> achouClientes = null;
-	ArrayList<Produtos> achouProdutos = null;
-	ArrayList<ItensPedido> achouItensPedido = null;
+	private Pedido achoupedido = new Pedido();
+	private ArrayList<ItensPedido> achouItensPedido = new ArrayList<ItensPedido>();
+	private JScrollPane scrollPane_3;
 	private JTextField textFieldQuantidadeItens;
 	private JTable tableProdutos;
-	private JTextField textField_2;
-	private JTable table;
-	JScrollPane scrollPane_2;
+	private JTextField textFieldTotalVenda;
+	private JScrollPane scrollPane_2;
 	private JTable tableItensPedido;
+	private double totalitematual = 0;
+	private double valor = 0;
+	private int numeroitens;
 
 	/**
 	 * Launch the application.
@@ -67,8 +75,23 @@ public class FrameCriarPedido extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("deprecation")
 	public FrameCriarPedido() {
-	
+		Funcionario funcionario = null;
+		
+		try {
+			funcionario = Fachada.getInstance().procurarUsuario(Login.getInstance().getTextFieldUsuario().getText(), Login.getInstance().getPasswordField().getText());
+		} catch (NaoLocalizadoUsuarioException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Pedido pedido = new Pedido();
+		
+		Fachada.getInstance().cadastrarPedido(pedido);
+		
+		achoupedido = Fachada.getInstance().procurarPedido2();
+		achoupedido.setFuncionario(funcionario);
+		
 		setBounds(100, 100, 611, 708);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -112,10 +135,10 @@ public class FrameCriarPedido extends JFrame {
 		lblProduto.setBounds(33, 189, 56, 14);
 		contentPane.add(lblProduto);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(99, 187, 127, 20);
-		contentPane.add(textField_1);
+		textFieldProduto = new JTextField();
+		textFieldProduto.setColumns(10);
+		textFieldProduto.setBounds(99, 187, 127, 20);
+		contentPane.add(textFieldProduto);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(33, 213, 515, 93);
@@ -133,7 +156,7 @@ public class FrameCriarPedido extends JFrame {
 		tableProdutos.getColumnModel().getColumn(3).setPreferredWidth(80);
 		scrollPane_1.setViewportView(tableProdutos);
 		
-		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3 = new JScrollPane();
 		scrollPane_3.setBounds(33, 364, 520, 145);
 		contentPane.add(scrollPane_3);
 		
@@ -149,10 +172,16 @@ public class FrameCriarPedido extends JFrame {
 		tableItensPedido.getColumnModel().getColumn(3).setPreferredWidth(100);
 		scrollPane_3.setViewportView(tableItensPedido);
 		
-		Pedido pedido = Fachada.getInstance().procurarPedido2();
+		textFieldTotalVenda = new JTextField();
+		textFieldTotalVenda.setEditable(false);
+		textFieldTotalVenda.setBounds(456, 517, 83, 20);
+		contentPane.add(textFieldTotalVenda);
+		textFieldTotalVenda.setColumns(10);
+		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				
 				try {
 					achouClientes = Fachada.getInstance().listarClientes(textFieldCliente.getText());
@@ -175,12 +204,12 @@ public class FrameCriarPedido extends JFrame {
 				tableClientes.getColumnModel().getColumn(4).setPreferredWidth(108);
 				scrollPane.setViewportView(tableClientes);
 				
-				for(int i = 0; i <= achouClientes.size(); i++ ) {
+				for(int i = 0; i <= achouClientes.size()-1; i++ ) {
 					dadoscli.add(new Object[] {achouClientes.get(i).getCodigo(), achouClientes.get(i).getNome(), achouClientes.get(i).getCpf(), 
 							sdf.format(achouClientes.get(i).getNascimento().getTime()), achouClientes.get(i).getTelefone()});
 			}
 				
-			pedido.setCliente(achouClientes.get(tableClientes.getSelectedRow()));	
+				
 			}
 		});
 		btnBuscar.setBounds(226, 44, 83, 23);
@@ -191,7 +220,7 @@ public class FrameCriarPedido extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 					try {
-						achouProdutos = Fachada.getInstance().listarProdutos(textFieldCliente.getText());
+						achouProdutos = Fachada.getInstance().listarProdutos(textFieldProduto.getText());
 					} catch (NaoLocalizadoProdutoException e1) {
 						JOptionPane.showMessageDialog(null, "O Produto não existe.");
 						e1.printStackTrace();
@@ -214,21 +243,17 @@ public class FrameCriarPedido extends JFrame {
 					dadosprod.add(new Object[] {achouProdutos.get(i).getCodigo(), achouProdutos.get(i).getDescricao(), 
 							achouProdutos.get(i).getQuantidade(), achouProdutos.get(i).getValorvenda()});
 			}
-				
-				
-				
-				
-				
+	
 			}
 		});
 		
 		btnAdicionarItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+								
 				ItensPedido itenspedido = new ItensPedido();
 				
 				itenspedido.setProduto(achouProdutos.get(tableProdutos.getSelectedRow()));
-				itenspedido.setPedido(pedido);
+				itenspedido.setPedido(achoupedido);
 				
 				while(true) {
 					
@@ -239,7 +264,7 @@ public class FrameCriarPedido extends JFrame {
 						e2.printStackTrace();
 						break;
 					}
-						itenspedido.setValortotalitem(achouProdutos.get(tableProdutos.getSelectedColumn()).getValorvenda() * itenspedido.getQuantidadeitens());
+						itenspedido.setValortotalitem(achouProdutos.get(tableProdutos.getSelectedRow()).getValorvenda() * itenspedido.getQuantidadeitens());
 					try {
 						Fachada.getInstance().cadastrarItensPedido(itenspedido);
 					} catch (InserirException e1) {
@@ -253,36 +278,22 @@ public class FrameCriarPedido extends JFrame {
 					break;
 				}
 				
+				achouItensPedido.add(itenspedido);
 				
-				achouItensPedido = Fachada.getInstance().listarItensPedido(pedido.getCodigo());
 				
-				ArrayList<Object[]> dadositens = new ArrayList<Object[]>();
-				String [] Colunasitens = new String[] {"Produto", "Qtd", "Valor Unitario", "Valor total"};
-				ModeloTabela modeloitens = new ModeloTabela(dadositens, Colunasitens);
-				tableItensPedido = new JTable();
-				tableItensPedido.setModel(modeloitens);
-				tableItensPedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-				tableItensPedido.getColumnModel().getColumn(0).setPreferredWidth(100);
-				tableItensPedido.getColumnModel().getColumn(1).setPreferredWidth(100);
-				tableItensPedido.getColumnModel().getColumn(2).setPreferredWidth(100);
-				tableItensPedido.getColumnModel().getColumn(3).setPreferredWidth(100);
-				scrollPane_3.setViewportView(tableItensPedido);
+				carregarTabela();
+
 				
-				for(int i = 0; i <= achouItensPedido.size()-1; i++ ) {
-					dadositens.add(new Object[] {achouItensPedido.get(i).getProduto(), achouItensPedido.get(i).getQuantidadeitens(), 
-							achouItensPedido.get(i).getProduto().getValorvenda()
-							, achouItensPedido.get(i).getValortotalitem()});
-			}
-				
-			}
+				}		
 		});
+		
 		button.setBounds(236, 186, 83, 23);
 		contentPane.add(button);
 		
 		JButton btnRemoverItem = new JButton("Remover Item");
 		btnRemoverItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				diminuirTabela();
 			}
 		});
 		btnRemoverItem.setBounds(435, 336, 104, 23);
@@ -300,6 +311,19 @@ public class FrameCriarPedido extends JFrame {
 		contentPane.add(textFieldQuantidadeItens);
 		
 		JButton btnConcluirPedido = new JButton("Concluir Pedido");
+		btnConcluirPedido.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+								
+				achoupedido.setTotal(totalitematual);
+				achoupedido.setCliente(achouClientes.get(tableClientes.getSelectedRow()));
+				achoupedido.getData().setTime((Calendar.getInstance().getTime()));
+				achoupedido.setNumeroitens(numeroitens);
+				System.out.println(achoupedido.getNumeroitens());
+				Fachada.getInstance().alterarPedido2(achoupedido);
+				JOptionPane.showMessageDialog(null, "Pedido Realizado com sucesso");
+				dispose();
+			}
+		});
 		btnConcluirPedido.setBounds(106, 635, 141, 23);
 		contentPane.add(btnConcluirPedido);
 		
@@ -318,21 +342,60 @@ public class FrameCriarPedido extends JFrame {
 		lblItensDoPedido.setBounds(33, 339, 101, 14);
 		contentPane.add(lblItensDoPedido);
 		
-		
-		
 		JLabel lblTotal = new JLabel("Total:");
 		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblTotal.setBounds(400, 519, 46, 14);
 		contentPane.add(lblTotal);
 		
-		textField_2 = new JTextField();
-		textField_2.setEditable(false);
-		textField_2.setBounds(456, 517, 83, 20);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
+	}
+	
+	public void diminuirTabela() {
+		
+		ArrayList<Object[]> dadositens1 = new ArrayList<Object[]>();
+		String [] Colunasitens1 = new String[] {"Produto", "Qtd", "Valor Unitario", "Valor total"};
+		ModeloTabela modeloitens1 = new ModeloTabela(dadositens1, Colunasitens1);
+		tableItensPedido = new JTable();
+		tableItensPedido.setModel(modeloitens1);
+		tableItensPedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableItensPedido.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tableItensPedido.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tableItensPedido.getColumnModel().getColumn(2).setPreferredWidth(100);
+		tableItensPedido.getColumnModel().getColumn(3).setPreferredWidth(100);
+		scrollPane_3.setViewportView(tableItensPedido);
 		
 		
+				dadositens1.remove(tableItensPedido.getSelectedRow()+1);
+		
+				totalitematual = totalitematual - achouItensPedido.get(tableItensPedido.getSelectedRow()).getValortotalitem();
+				textFieldTotalVenda.setText(String.valueOf(totalitematual));
+	}
+	
+	public void carregarTabela() {
+		
+		ArrayList<Object[]> dadositens1 = new ArrayList<Object[]>();
+		String [] Colunasitens1 = new String[] {"Produto", "Qtd", "Valor Unitario", "Valor total"};
+		ModeloTabela modeloitens1 = new ModeloTabela(dadositens1, Colunasitens1);
+		tableItensPedido = new JTable();
+		tableItensPedido.setModel(modeloitens1);
+		tableItensPedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableItensPedido.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tableItensPedido.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tableItensPedido.getColumnModel().getColumn(2).setPreferredWidth(100);
+		tableItensPedido.getColumnModel().getColumn(3).setPreferredWidth(100);
+		scrollPane_3.setViewportView(tableItensPedido);
+		
+		int x = achouItensPedido.size()-1;
+		
+			for(int i = 0; i <= achouItensPedido.size()-1; i++)
+				dadositens1.add(new Object[] {achouItensPedido.get(i).getProduto().getDescricao(), achouItensPedido.get(i).getQuantidadeitens(), 
+				achouItensPedido.get(i).getProduto().getValorvenda(), achouItensPedido.get(i).getValortotalitem()});
+				
+				
+				totalitematual = totalitematual + achouItensPedido.get(x).getValortotalitem();
+				textFieldTotalVenda.setText(String.valueOf(totalitematual));
 		
 		
+			
+				
 	}
 }

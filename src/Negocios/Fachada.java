@@ -89,6 +89,10 @@ public class Fachada {
 		return pedidos.procurar2();
 	}
 	
+	public void alterarPedido2(Pedido pedido) {
+		pedidos.alterar2(pedido);
+	}
+	
 	public Pedido procurarPedido(String codPedido) throws NaoLocalizadoPedidoException{
 		return pedidos.procurar(codPedido);
 	}

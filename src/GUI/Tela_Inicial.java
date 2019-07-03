@@ -137,18 +137,6 @@ public class Tela_Inicial extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				FrameCriarPedido criarpedido = new FrameCriarPedido();
-				Funcionario funcionario = null;
-				try {
-					funcionario = Fachada.getInstance().procurarUsuario(Login.getInstance().getTextFieldUsuario().getText(), Login.getInstance().getPasswordField().getText());
-				} catch (NaoLocalizadoUsuarioException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				Pedido pedido = new Pedido();
-				pedido.setFuncionario(funcionario);
-				System.out.println(pedido.getFuncionario().getCodigo());
-				Fachada.getInstance().cadastrarPedido(pedido);
 				criarpedido.setVisible(true);
 				primeiratelacliente.setVisible(false);
 				primeiratelafunc.setVisible(false);

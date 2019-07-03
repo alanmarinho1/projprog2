@@ -67,8 +67,8 @@ public class PrimeiraTelaProduto extends JPanel {
 		JButton btnCriar = new JButton("Criar");
 		btnCriar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrameCriarPedido criarpedido = new FrameCriarPedido();
-				criarpedido.setVisible(true);
+				FrameCriarProduto criarproduto = new FrameCriarProduto();
+				criarproduto.setVisible(true);
 				
 			}
 		});
